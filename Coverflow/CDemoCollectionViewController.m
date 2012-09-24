@@ -75,6 +75,13 @@
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath;
 	{
 	CDemoCollectionViewCell *theCell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"DEMO_CELL" forIndexPath:indexPath];
+
+	if (theCell.gestureRecognizers.count == 0)
+		{
+		[theCell addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)]];
+		}
+
+
 	theCell.backgroundColor = [UIColor colorWithHue:(float)indexPath.row / (float)self.cellCount saturation:0.333 brightness:1.0 alpha:1.0];
 
 	if (indexPath.row < self.assets.count)
@@ -84,6 +91,13 @@
 		}
 
 	return(theCell);
+	}
+
+- (void)tap:(UITapGestureRecognizer *)inGestureRecognizer
+	{
+	NSIndexPath *theIndexPath = [self.collectionView indexPathForCell:(UICollectionViewCell *)inGestureRecognizer.view];
+
+	NSLog(@"%@", [self.collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:theIndexPath]);
 	}
 
 @end

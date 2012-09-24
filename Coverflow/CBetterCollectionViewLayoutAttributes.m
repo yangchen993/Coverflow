@@ -10,6 +10,11 @@
 
 @implementation CBetterCollectionViewLayoutAttributes
 
+- (NSString *)description
+    {
+    return([NSString stringWithFormat:@"%@ (%@)", [super description], self.userInfo]);
+    }
+
 - (id)copyWithZone:(NSZone *)zone;
     {
     CBetterCollectionViewLayoutAttributes *theCopy = [super copyWithZone:zone];

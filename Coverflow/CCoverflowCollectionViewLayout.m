@@ -39,14 +39,11 @@
     self.cellSpacing = (CGSize){ 200, 0 };
 	self.snapToCells = YES;
 
-//    self.positionInterpolator = [CInterpolator interpolatorWithDictionary:@{
-////		@(-1.0):                 @( 0.5),
-//		@(-0.5 - FLT_EPSILON):  @( 0.5),
-//		@(-0.5):                @( 0.0),
-//		@( 0.5):                @( 0.0),
-//		@( 0.5 + FLT_EPSILON):  @(-0.5),
-////		@( 1.0):                 @(-0.5),
-//		}];
+    self.positionInterpolator = [[CInterpolator interpolatorWithDictionary:@{
+		@(-1.0):                 @( 0.5),
+		@(-0.5 - FLT_EPSILON):  @( 0.5),
+		@(-0.5):                @( 0.0),
+		}] interpolatorWithReflection:NO];
 
 	self.rotationInterpolator = [[CInterpolator interpolatorWithDictionary:@{
 		@(-0.5):  @(80.0),

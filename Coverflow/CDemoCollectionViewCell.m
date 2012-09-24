@@ -12,6 +12,16 @@
 
 @implementation CDemoCollectionViewCell
 
+- (id)initWithCoder:(NSCoder *)inCoder
+    {
+    if ((self = [super initWithCoder:inCoder]) != NULL)
+        {
+        }
+    return(self);
+    }
+
+
+
 - (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes
     {
     [super applyLayoutAttributes:layoutAttributes];
