@@ -37,6 +37,7 @@
 	{
     self.cellSize = (CGSize){ 200, 200 };
     self.cellSpacing = (CGSize){ 200, 0 };
+	self.snapToCells = YES;
 
 //    self.positionInterpolator = [CInterpolator interpolatorWithDictionary:@{
 ////		@(-1.0):                 @( 0.5),
@@ -47,26 +48,22 @@
 ////		@( 1.0):                 @(-0.5),
 //		}];
 
-	self.rotationInterpolator = [CInterpolator interpolatorWithDictionary:@{
+	self.rotationInterpolator = [[CInterpolator interpolatorWithDictionary:@{
 		@(-0.5):               @(  80),
 		@(-0.25):               @(  0),
-		@( 0.25):               @(  0),
-		@( 0.5):               @(  -80),
-		}];
+		}] interpolatorWithReflection];
 
-	self.scaleInterpolator = [CInterpolator interpolatorWithDictionary:@{
+	self.scaleInterpolator = [[CInterpolator interpolatorWithDictionary:@{
 		@(-1.0):               @(  0.9),
 		@(-0.5):               @(  1.0),
-		@( 0.5):               @(  1.0),
-		@( 1.0):               @(  0.9),
-		}];
+		}] interpolatorWithReflection];
 
-	self.darknessInterpolator = [CInterpolator interpolatorWithDictionary:@{
-		@(-0.5):               @(  0.5),
-		@(-0.25):               @(  1.0),
-		@( 0.25):               @(  1.0),
-		@( 0.5):               @(  0.5),
-		}];
+	self.darknessInterpolator = [[CInterpolator interpolatorWithDictionary:@{
+		@(-0.5):  @(0.5),
+		@(-0.25): @(1.0),
+		}] interpolatorWithReflection];
+
+	NSLog(@"%@", self.darknessInterpolator);
 
     self.attributeCache = [[NSCache alloc] init];
 	}
@@ -144,7 +141,7 @@
 	const CGFloat theRotation = [self.rotationInterpolator interpolatedValueForKey:theDelta];
 	theTransform = CATransform3DRotate(theTransform, theRotation * M_PI / 180.0, 0.0, 1.0, 0.0);
 
-	CGFloat theZIndex = [self.zIndexInterpolator interpolatedValueForKey:theDelta];
+//	CGFloat theZIndex = [self.zIndexInterpolator interpolatedValueForKey:theDelta];
 //	theTransform = CATransform3DTranslate(theTransform, 0.0, 0.0, -theZIndex * 3000.0 * 10.0);
 //	theAttributes.zIndex = theZIndex;
 
@@ -177,5 +174,18 @@
 
     return(theAttributes);
 	}
+
+
+- (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity
+    {
+    CGPoint theTargetContentOffset = proposedContentOffset;
+    if (self.snapToCells == YES)
+        {
+        theTargetContentOffset.x = roundf(theTargetContentOffset.x / self.cellSpacing.width) * self.cellSpacing.width;
+        theTargetContentOffset.x = MIN(theTargetContentOffset.x, (self.cellCount - 1) * self.cellSpacing.width);
+        }
+    return(theTargetContentOffset);
+    }
+
 
 @end

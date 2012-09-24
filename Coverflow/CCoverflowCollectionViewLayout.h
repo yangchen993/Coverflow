@@ -11,4 +11,5 @@
 @interface CCoverflowCollectionViewLayout : UICollectionViewLayout
 @property (readwrite, nonatomic, assign) CGSize cellSize;
 @property (readwrite, nonatomic, assign) CGSize cellSpacing;
+@property (readwrite, nonatomic, assign) BOOL snapToCells;
 @end

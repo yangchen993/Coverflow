@@ -24,7 +24,14 @@
 #pragma mark -
 
 @interface CInterpolator (Convenience)
+
+- (NSArray *)items;
+
+- (void)enumerateKeysAndObjectsOptions:(NSEnumerationOptions)opts usingBlock:(void (^)(id key, id value, BOOL *stop))block;;
 - (void)enumerateKeysAndObjectsUsingBlock:(void (^)(id key, id value, BOOL *stop))block;;
+
 - (CInterpolator *)interpolatorWithReflection;
+
 - (NSArray *)interpolatedValuesForKeys:(NSArray *)inKeys;
+
 @end

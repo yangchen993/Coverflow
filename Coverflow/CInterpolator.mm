@@ -54,6 +54,11 @@
         }
     }
 
+- (NSString *)description
+    {
+    return([NSString stringWithFormat:@"%@ %@", [super description], [self items]]);
+    }
+
 - (CGFloat)interpolatedValueForKey:(CGFloat)key
     {
     if (_KV == NULL)
@@ -85,22 +90,37 @@
 
 @implementation CInterpolator (Convenience)
 
-- (void)enumerateKeysAndObjectsUsingBlock:(void (^)(id key, id value, BOOL *stop))block
+- (NSArray *)items
 	{
-	[self.keys enumerateObjectsWithOptions:0 usingBlock:^(id key, NSUInteger idx, BOOL *stop) {
+	NSMutableArray *theItems = [NSMutableArray array];
+	[self enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
+		[theItems addObject:@[ key, value ]];
+		}];
+	return(theItems);
+	}
+
+- (void)enumerateKeysAndObjectsOptions:(NSEnumerationOptions)opts usingBlock:(void (^)(id key, id value, BOOL *stop))block
+	{
+	NSParameterAssert(block != NULL);
+	[self.keys enumerateObjectsWithOptions:opts usingBlock:^(id key, NSUInteger idx, BOOL *stop) {
 		id value = self.values[idx];
 		block(key, value, stop);
 		}];
 	}
 
-- (CInterpolator *)interpolatorWithReflection;
+- (void)enumerateKeysAndObjectsUsingBlock:(void (^)(id key, id value, BOOL *stop))block
+	{
+	[self enumerateKeysAndObjectsOptions:0 usingBlock:block];
+	}
+
+- (CInterpolator *)interpolatorWithReflection
 	{
 	NSMutableArray *theKeys = [self.keys mutableCopy];
 	NSMutableArray *theValues = [self.values mutableCopy];
 
-	[self enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
+	[self enumerateKeysAndObjectsOptions:NSEnumerationReverse usingBlock:^(id key, id value, BOOL *stop) {
 		[theKeys addObject:@(-[key doubleValue])];
-		[theValues addObject:@(-[value doubleValue])];
+		[theValues addObject:@([value doubleValue])];
 		}];
 
 	CInterpolator *theInterpolator = [CInterpolator interpolatorWithValues:theValues forKeys:theKeys];
