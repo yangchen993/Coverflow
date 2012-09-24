@@ -63,7 +63,7 @@
 		@(-0.25): @(1.0),
 		}] interpolatorWithReflection];
 
-	NSLog(@"%@", self.darknessInterpolator);
+		}] interpolatorWithReflection:NO];
 
     self.attributeCache = [[NSCache alloc] init];
 	}
