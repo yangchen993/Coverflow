@@ -23,6 +23,14 @@
     return([[self alloc] init]);
     }
 
++ (CInterpolator *)interpolatorWithValues:(NSArray *)inValues forKeys:(NSArray *)inKeys;
+	{
+	CInterpolator *theInterpolator = [self interpolator];
+	theInterpolator.keys = inKeys;
+	theInterpolator.values = inValues;
+	return(theInterpolator);
+	}
+
 + (CInterpolator *)interpolatorWithDictionary:(NSDictionary *)inDictionary
 	{
 	NSArray *theKeys = [[inDictionary allKeys] sortedArrayUsingSelector:@selector(compare:)];
@@ -76,6 +84,28 @@
 #pragma mark -
 
 @implementation CInterpolator (Convenience)
+
+- (void)enumerateKeysAndObjectsUsingBlock:(void (^)(id key, id value, BOOL *stop))block
+	{
+	[self.keys enumerateObjectsWithOptions:0 usingBlock:^(id key, NSUInteger idx, BOOL *stop) {
+		id value = self.values[idx];
+		block(key, value, stop);
+		}];
+	}
+
+- (CInterpolator *)interpolatorWithReflection;
+	{
+	NSMutableArray *theKeys = [self.keys mutableCopy];
+	NSMutableArray *theValues = [self.values mutableCopy];
+
+	[self enumerateKeysAndObjectsUsingBlock:^(id key, id value, BOOL *stop) {
+		[theKeys addObject:@(-[key doubleValue])];
+		[theValues addObject:@(-[value doubleValue])];
+		}];
+
+	CInterpolator *theInterpolator = [CInterpolator interpolatorWithValues:theValues forKeys:theKeys];
+	return(theInterpolator);
+	}
 
 - (NSArray *)interpolatedValuesForKeys:(NSArray *)inKeys
     {

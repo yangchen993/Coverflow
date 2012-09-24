@@ -14,6 +14,7 @@
 @property (readwrite, nonatomic, copy) NSArray *values;
 
 + (CInterpolator *)interpolator;
++ (CInterpolator *)interpolatorWithValues:(NSArray *)inValues forKeys:(NSArray *)inKeys;
 + (CInterpolator *)interpolatorWithDictionary:(NSDictionary *)inDictionary;
 
 - (CGFloat)interpolatedValueForKey:(CGFloat)key;
@@ -23,5 +24,7 @@
 #pragma mark -
 
 @interface CInterpolator (Convenience)
+- (void)enumerateKeysAndObjectsUsingBlock:(void (^)(id key, id value, BOOL *stop))block;;
+- (CInterpolator *)interpolatorWithReflection;
 - (NSArray *)interpolatedValuesForKeys:(NSArray *)inKeys;
 @end

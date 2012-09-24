@@ -36,16 +36,16 @@
 - (void)awakeFromNib
 	{
     self.cellSize = (CGSize){ 200, 200 };
-    self.cellSpacing = (CGSize){ 100, 0 };
+    self.cellSpacing = (CGSize){ 200, 0 };
 
-	const CGFloat D = 0.5;
-
-    self.positionInterpolator = [CInterpolator interpolatorWithDictionary:@{
-		@(-D * 5.0): @(-8.0),
-		@(-D * 2.0): @(1.0),
-		@( D * 2.0): @(1.0),
-		@( D * 5.0): @(0.5),
-		}];
+//    self.positionInterpolator = [CInterpolator interpolatorWithDictionary:@{
+////		@(-1.0):                 @( 0.5),
+//		@(-0.5 - FLT_EPSILON):  @( 0.5),
+//		@(-0.5):                @( 0.0),
+//		@( 0.5):                @( 0.0),
+//		@( 0.5 + FLT_EPSILON):  @(-0.5),
+////		@( 1.0):                 @(-0.5),
+//		}];
 
 	self.rotationInterpolator = [CInterpolator interpolatorWithDictionary:@{
 		@(-0.5):               @(  80),
@@ -114,10 +114,12 @@
 
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
 	{
+	// Capture some commonly used variables...
     const CGFloat N = indexPath.row;
-
 	const CGRect theViewBounds = self.collectionView.bounds;
 
+	// Get a cached attributes object or create a new one...
+	// TODO: Not sure if caching helps or hinders.
     CBetterCollectionViewLayoutAttributes *theAttributes = [self.attributeCache objectForKey:indexPath];
     if (theAttributes == NULL)
         {
@@ -127,12 +129,9 @@
         [self.attributeCache setObject:theAttributes forKey:indexPath];
         }
 
-
 	// #########################################################################
 
-
 	// Delta is distance from center of the view in cellSpacing units...
-
 	const CGFloat theDelta = ((N + 0.5) * self.cellSpacing.width + self.centerOffset - theViewBounds.size.width * 0.5 - self.collectionView.contentOffset.x) / self.cellSpacing.width;
 
 	// #########################################################################
@@ -140,10 +139,10 @@
 	theTransform.m34 = 1.0 / -2000.0; // Magic Number is Magic.
 
     const CGFloat theScale = [self.scaleInterpolator interpolatedValueForKey:theDelta];
-//    theTransform = CATransform3DScale(theTransform, theScale, theScale, 1.0);
+    theTransform = CATransform3DScale(theTransform, theScale, theScale, 1.0);
 
 	const CGFloat theRotation = [self.rotationInterpolator interpolatedValueForKey:theDelta];
-//	theTransform = CATransform3DRotate(theTransform, theRotation * M_PI / 180.0, 0.0, 1.0, 0.0);
+	theTransform = CATransform3DRotate(theTransform, theRotation * M_PI / 180.0, 0.0, 1.0, 0.0);
 
 	CGFloat theZIndex = [self.zIndexInterpolator interpolatedValueForKey:theDelta];
 //	theTransform = CATransform3DTranslate(theTransform, 0.0, 0.0, -theZIndex * 3000.0 * 10.0);
@@ -153,22 +152,28 @@
 
 	// #########################################################################
 
-    CGFloat thePosition = ((N + 0.5) * self.cellSpacing.width);
-	theAttributes.center = (CGPoint){ thePosition + self.centerOffset, CGRectGetMidY(theViewBounds) };
-
-
-	// #########################################################################
-
 //	theAttributes.shieldAlpha = 1.0 - [self.darknessInterpolator interpolatedValueForKey:theDelta];
 
 	// #########################################################################
+
+	CGFloat thePositionMultiplier = self.positionInterpolator ? [self.positionInterpolator interpolatedValueForKey:theDelta] : 0.0f;
+    CGFloat thePosition = ((N + 0.5) * self.cellSpacing.width);
+	thePosition += thePositionMultiplier * self.cellSpacing.width;
+	theAttributes.center = (CGPoint){ thePosition + self.centerOffset, CGRectGetMidY(theViewBounds) };
+
+	// #########################################################################
+
+	// TODO - this is just for debugging...
 	theAttributes.userInfo = @{
 		@"delta": @(theDelta),
-		@"rotation": @(theRotation),
-		@"scale": @(theScale),
-		@"Z": @(theZIndex),
+//		@"rotation": @(theRotation),
+//		@"scale": @(theScale),
+//		@"Z": @(theZIndex),
 		@"contentOffset": @(self.collectionView.contentOffset.x),
+		@"P": @(thePositionMultiplier),
 		};
+
+	// #########################################################################
 
     return(theAttributes);
 	}
