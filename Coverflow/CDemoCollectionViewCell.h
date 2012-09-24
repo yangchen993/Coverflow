@@ -6,8 +6,8 @@
 //  Copyright (c) 2012 toxicsoftware. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "CBetterCollectionViewCell.h"
 
-@interface CDemoCollectionViewCell : UICollectionViewCell
+@interface CDemoCollectionViewCell : CBetterCollectionViewCell
 @property (readwrite, nonatomic, weak) IBOutlet UILabel *informationLabel;
 @end

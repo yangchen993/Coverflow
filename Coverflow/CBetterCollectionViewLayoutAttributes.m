@@ -13,6 +13,7 @@
 - (id)copyWithZone:(NSZone *)zone;
     {
     CBetterCollectionViewLayoutAttributes *theCopy = [super copyWithZone:zone];
+	theCopy.shieldAlpha = self.shieldAlpha;
 	theCopy.userInfo = [self.userInfo copyWithZone:zone];
     return(theCopy);
     }

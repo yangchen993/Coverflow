@@ -24,6 +24,7 @@
 		456BDE0716108D7A00398F00 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 456BDE0616108D7A00398F00 /* QuartzCore.framework */; };
 		456BDE0A161091A300398F00 /* CDemoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 456BDE09161091A300398F00 /* CDemoCollectionViewCell.m */; };
 		456BDE0D161092AA00398F00 /* CBetterCollectionViewLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 456BDE0C161092AA00398F00 /* CBetterCollectionViewLayoutAttributes.m */; };
+		458DD6071610D71A00DB2DD2 /* CBetterCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 458DD6061610D71A00DB2DD2 /* CBetterCollectionViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +55,8 @@
 		456BDE09161091A300398F00 /* CDemoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDemoCollectionViewCell.m; sourceTree = "<group>"; };
 		456BDE0B161092AA00398F00 /* CBetterCollectionViewLayoutAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBetterCollectionViewLayoutAttributes.h; sourceTree = "<group>"; };
 		456BDE0C161092AA00398F00 /* CBetterCollectionViewLayoutAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBetterCollectionViewLayoutAttributes.m; sourceTree = "<group>"; };
+		458DD6051610D71A00DB2DD2 /* CBetterCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBetterCollectionViewCell.h; sourceTree = "<group>"; };
+		458DD6061610D71A00DB2DD2 /* CBetterCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBetterCollectionViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +116,8 @@
 				456BDDFA16108AEB00398F00 /* CCoverflowCollectionViewLayout.m */,
 				456BDE0B161092AA00398F00 /* CBetterCollectionViewLayoutAttributes.h */,
 				456BDE0C161092AA00398F00 /* CBetterCollectionViewLayoutAttributes.m */,
+				458DD6051610D71A00DB2DD2 /* CBetterCollectionViewCell.h */,
+				458DD6061610D71A00DB2DD2 /* CBetterCollectionViewCell.m */,
 				456BDE0016108B0800398F00 /* CInterpolator.h */,
 				456BDE0116108B0800398F00 /* CInterpolator.mm */,
 				456BDE0216108B0800398F00 /* Interpolator.h */,
@@ -211,6 +216,7 @@
 				456BDE0516108B0800398F00 /* Interpolator.cpp in Sources */,
 				456BDE0A161091A300398F00 /* CDemoCollectionViewCell.m in Sources */,
 				456BDE0D161092AA00398F00 /* CBetterCollectionViewLayoutAttributes.m in Sources */,
+				458DD6071610D71A00DB2DD2 /* CBetterCollectionViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,6 +332,7 @@
 				456BDDF51610896400398F00 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
