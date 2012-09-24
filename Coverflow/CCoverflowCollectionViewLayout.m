@@ -23,7 +23,6 @@
 @property (readwrite, nonatomic, strong) CInterpolator *darknessInterpolator;
 @property (readwrite, nonatomic, strong) CInterpolator *rotationInterpolator;
 @property (readwrite, nonatomic, strong) CInterpolator *zIndexInterpolator;
-@property (readwrite, nonatomic, strong) NSCache *attributeCache;
 @end
 
 @implementation CCoverflowCollectionViewLayout
@@ -59,8 +58,6 @@
 		@(-0.5):  @(0.5),
 		@(-0.25): @(1.0),
 		}] interpolatorWithReflection:NO];
-
-    self.attributeCache = [[NSCache alloc] init];
 	}
 
 - (void)prepareLayout
@@ -113,14 +110,8 @@
 
 	// Get a cached attributes object or create a new one...
 	// TODO: Not sure if caching helps or hinders.
-    CBetterCollectionViewLayoutAttributes *theAttributes = [self.attributeCache objectForKey:indexPath];
-    if (theAttributes == NULL)
-        {
-        theAttributes = [[[self class] layoutAttributesClass] layoutAttributesForCellWithIndexPath:indexPath];
-        theAttributes.size = self.cellSize;
-
-        [self.attributeCache setObject:theAttributes forKey:indexPath];
-        }
+    CBetterCollectionViewLayoutAttributes *theAttributes = [[[self class] layoutAttributesClass] layoutAttributesForCellWithIndexPath:indexPath];
+	theAttributes.size = self.cellSize;
 
 	// #########################################################################
 
