@@ -51,18 +51,16 @@
 	self.rotationInterpolator = [[CInterpolator interpolatorWithDictionary:@{
 		@(-0.5):  @(80.0),
 		@(-0.25): @( 0.0),
-		}] interpolatorWithReflection];
+		}] interpolatorWithReflection:YES];
 
 	self.scaleInterpolator = [[CInterpolator interpolatorWithDictionary:@{
 		@(-1.0):               @(  0.9),
 		@(-0.5):               @(  1.0),
-		}] interpolatorWithReflection];
+		}] interpolatorWithReflection:NO];
 
 	self.darknessInterpolator = [[CInterpolator interpolatorWithDictionary:@{
 		@(-0.5):  @(0.5),
 		@(-0.25): @(1.0),
-		}] interpolatorWithReflection];
-
 		}] interpolatorWithReflection:NO];
 
     self.attributeCache = [[NSCache alloc] init];

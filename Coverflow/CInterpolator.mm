@@ -113,14 +113,14 @@
 	[self enumerateKeysAndObjectsOptions:0 usingBlock:block];
 	}
 
-- (CInterpolator *)interpolatorWithReflection
+- (CInterpolator *)interpolatorWithReflection:(BOOL)inInvertValues
 	{
 	NSMutableArray *theKeys = [self.keys mutableCopy];
 	NSMutableArray *theValues = [self.values mutableCopy];
 
 	[self enumerateKeysAndObjectsOptions:NSEnumerationReverse usingBlock:^(id key, id value, BOOL *stop) {
 		[theKeys addObject:@(-[key doubleValue])];
-		[theValues addObject:@([value doubleValue])];
+		[theValues addObject:@(inInvertValues ? -[value doubleValue] : [value doubleValue])];
 		}];
 
 	CInterpolator *theInterpolator = [CInterpolator interpolatorWithValues:theValues forKeys:theKeys];

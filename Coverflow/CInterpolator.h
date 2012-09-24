@@ -30,7 +30,7 @@
 - (void)enumerateKeysAndObjectsOptions:(NSEnumerationOptions)opts usingBlock:(void (^)(id key, id value, BOOL *stop))block;;
 - (void)enumerateKeysAndObjectsUsingBlock:(void (^)(id key, id value, BOOL *stop))block;;
 
-- (CInterpolator *)interpolatorWithReflection;
+- (CInterpolator *)interpolatorWithReflection:(BOOL)inInvertValues;
 
 - (NSArray *)interpolatedValuesForKeys:(NSArray *)inKeys;
 
