@@ -82,6 +82,7 @@
 
 - (CGSize)collectionViewContentSize
 	{
+	#warning TODO
     const CGSize theSize = {
         .width = 10000, // self.cellSpacing.width * self.cellCount + fabs(self.centerOffset) * 2,
         .height = self.collectionView.bounds.size.height,
@@ -150,6 +151,8 @@
 //	theAttributes.shieldAlpha = 1.0 - [self.darknessInterpolator interpolatedValueForKey:theDelta];
 
 	// #########################################################################
+
+	#warning TODO
 
 	CGFloat thePositionMultiplier = self.positionInterpolator ? [self.positionInterpolator interpolatedValueForKey:theDelta] : 0.0f;
     CGFloat thePosition = ((N + 0.5f) * self.cellSpacing.width);

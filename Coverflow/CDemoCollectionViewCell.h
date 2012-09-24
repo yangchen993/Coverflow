@@ -10,4 +10,5 @@
 
 @interface CDemoCollectionViewCell : CBetterCollectionViewCell
 @property (readwrite, nonatomic, weak) IBOutlet UILabel *informationLabel;
+@property (readwrite, nonatomic, weak) IBOutlet UIImageView *imageView;
 @end

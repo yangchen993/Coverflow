@@ -20,8 +20,12 @@
                                     <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="bnL-P1-tcf">
+                                            <rect key="frame" x="0.0" y="0.0" width="300" height="300"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        </imageView>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Info" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ycu-Ug-89v">
-                                            <rect key="frame" x="20" y="20" width="260" height="267"/>
+                                            <rect key="frame" x="20" y="20" width="260" height="260"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -33,6 +37,7 @@
                                 <color key="backgroundColor" red="0.62482786320000006" green="1" blue="0.98914686669999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <size key="customSize" width="300" height="300"/>
                                 <connections>
+                                    <outlet property="imageView" destination="bnL-P1-tcf" id="rQy-xF-GUs"/>
                                     <outlet property="informationLabel" destination="Ycu-Ug-89v" id="4E7-Vg-AVH"/>
                                 </connections>
                             </collectionViewCell>
@@ -52,12 +57,16 @@
         </scene>
     </scenes>
     <classes>
+        <class className="CBetterCollectionViewCell" superclassName="UICollectionViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CBetterCollectionViewCell.h"/>
+        </class>
         <class className="CCoverflowCollectionViewLayout" superclassName="UICollectionViewLayout">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CCoverflowCollectionViewLayout.h"/>
         </class>
-        <class className="CDemoCollectionViewCell" superclassName="UICollectionViewCell">
+        <class className="CDemoCollectionViewCell" superclassName="CBetterCollectionViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CDemoCollectionViewCell.h"/>
             <relationships>
+                <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="informationLabel" candidateClass="UILabel"/>
             </relationships>
         </class>

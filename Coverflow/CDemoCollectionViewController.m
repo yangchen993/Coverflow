@@ -9,11 +9,14 @@
 #import "CDemoCollectionViewController.h"
 
 #import <QuartzCore/QuartzCore.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 
 #import "CDemoCollectionViewCell.h"
 
 @interface CDemoCollectionViewController ()
+@property (readwrite, nonatomic, strong) ALAssetsLibrary *assetsLibrary;
 @property (readwrite, nonatomic, assign) NSInteger cellCount;
+@property (readwrite, nonatomic, strong) NSArray *assets;
 @end
 
 @implementation CDemoCollectionViewController
@@ -23,6 +26,35 @@
 	[super viewDidLoad];
 
 	self.cellCount = 10;
+
+	NSMutableArray *theAssets = [NSMutableArray array];
+
+	// Don't do this.
+	self.assetsLibrary = [[ALAssetsLibrary alloc] init];
+	[self.assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop1) {
+		[group enumerateAssetsUsingBlock:^(ALAsset *asset, NSUInteger index, BOOL *stop2) {
+			if (theAssets.count > 100)
+				{
+				*stop2 = YES;
+				}
+			if (asset)
+				{
+				[theAssets addObject:asset];
+				}
+			}];
+
+		self.assets = theAssets;
+		if (self.assets.count > 0)
+			{
+			dispatch_async(dispatch_get_main_queue(), ^{
+				self.cellCount = self.assets.count;
+				[self.collectionView reloadData];
+				});
+			}
+
+		*stop1 = YES;
+		} failureBlock:NULL];
+
 	}
 
 - (void)viewDidAppear:(BOOL)animated
@@ -44,6 +76,12 @@
 	{
 	CDemoCollectionViewCell *theCell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"DEMO_CELL" forIndexPath:indexPath];
 	theCell.backgroundColor = [UIColor colorWithHue:(float)indexPath.row / (float)self.cellCount saturation:0.333 brightness:1.0 alpha:1.0];
+
+	if (indexPath.row < self.assets.count)
+		{
+		ALAsset *theAsset = [self.assets objectAtIndex:indexPath.row];
+		theCell.imageView.image = [UIImage imageWithCGImage:theAsset.thumbnail];
+		}
 
 	return(theCell);
 	}
