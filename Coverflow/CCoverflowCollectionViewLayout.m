@@ -49,8 +49,8 @@
 //		}];
 
 	self.rotationInterpolator = [[CInterpolator interpolatorWithDictionary:@{
-		@(-0.5):               @(  80),
-		@(-0.25):               @(  0),
+		@(-0.5):  @(80.0),
+		@(-0.25): @( 0.0),
 		}] interpolatorWithReflection];
 
 	self.scaleInterpolator = [[CInterpolator interpolatorWithDictionary:@{
@@ -129,17 +129,17 @@
 	// #########################################################################
 
 	// Delta is distance from center of the view in cellSpacing units...
-	const CGFloat theDelta = ((N + 0.5) * self.cellSpacing.width + self.centerOffset - theViewBounds.size.width * 0.5 - self.collectionView.contentOffset.x) / self.cellSpacing.width;
+	const CGFloat theDelta = ((N + 0.5f) * self.cellSpacing.width + self.centerOffset - theViewBounds.size.width * 0.5f - self.collectionView.contentOffset.x) / self.cellSpacing.width;
 
 	// #########################################################################
 	CATransform3D theTransform = CATransform3DIdentity;
-	theTransform.m34 = 1.0 / -2000.0; // Magic Number is Magic.
+	theTransform.m34 = 1.0f / -2000.0f; // Magic Number is Magic.
 
     const CGFloat theScale = [self.scaleInterpolator interpolatedValueForKey:theDelta];
-    theTransform = CATransform3DScale(theTransform, theScale, theScale, 1.0);
+    theTransform = CATransform3DScale(theTransform, theScale, theScale, 1.0f);
 
 	const CGFloat theRotation = [self.rotationInterpolator interpolatedValueForKey:theDelta];
-	theTransform = CATransform3DRotate(theTransform, theRotation * M_PI / 180.0, 0.0, 1.0, 0.0);
+	theTransform = CATransform3DRotate(theTransform, theRotation * (CGFloat)M_PI / 180.0f, 0.0f, 1.0f, 0.0f);
 
 //	CGFloat theZIndex = [self.zIndexInterpolator interpolatedValueForKey:theDelta];
 //	theTransform = CATransform3DTranslate(theTransform, 0.0, 0.0, -theZIndex * 3000.0 * 10.0);
@@ -154,7 +154,7 @@
 	// #########################################################################
 
 	CGFloat thePositionMultiplier = self.positionInterpolator ? [self.positionInterpolator interpolatedValueForKey:theDelta] : 0.0f;
-    CGFloat thePosition = ((N + 0.5) * self.cellSpacing.width);
+    CGFloat thePosition = ((N + 0.5f) * self.cellSpacing.width);
 	thePosition += thePositionMultiplier * self.cellSpacing.width;
 	theAttributes.center = (CGPoint){ thePosition + self.centerOffset, CGRectGetMidY(theViewBounds) };
 

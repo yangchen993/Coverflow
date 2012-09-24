@@ -78,7 +78,7 @@
     // #########################################################################
 
     _KV = new Interpolator <CGFloat> ();
-    for (int N = 0; N != self.keys.count; ++N)
+    for (NSUInteger N = 0; N != self.keys.count; ++N)
         {
         _KV->addKV([self.keys[N] floatValue], [self.values[N] floatValue]);
         }
