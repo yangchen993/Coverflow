@@ -131,11 +131,8 @@
 	const CGFloat theAdjustedDelta = ((N + 0.5f) * self.cellSpacing.width + self.centerOffset - theViewBounds.size.width * 0.5f - self.collectionView.contentOffset.x) / self.cellSpacing.width;
 
 	// #########################################################################
-
-
-	// #########################################################################
 	CATransform3D theTransform = CATransform3DIdentity;
-	theTransform.m34 = 1.0f / -2000.0f; // Magic Number is Magic.
+	theTransform.m34 = 1.0f / -20000.0f; // Magic Number is Magic.
 
     const CGFloat theScale = [self.scaleInterpolator interpolatedValueForKey:theAdjustedDelta];
     theTransform = CATransform3DScale(theTransform, theScale, theScale, 1.0f);
