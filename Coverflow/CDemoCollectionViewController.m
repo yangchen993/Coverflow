@@ -28,11 +28,27 @@
 
 	self.cellCount = 10;
 
+#if TARGET_IPHONE_SIMULATOR == 1
+	// Don't do this either...
+	#if 1
 	NSMutableArray *theAssets = [NSMutableArray array];
-
+	NSURL *theURL = [[[NSBundle mainBundle] resourceURL] URLByAppendingPathComponent:@"Images"];
+	NSEnumerator *theEnumerator = [[NSFileManager defaultManager] enumeratorAtURL:theURL includingPropertiesForKeys:NULL options:NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsHiddenFiles errorHandler:NULL];
+	for (theURL in theEnumerator)
+		{
+		if ([[theURL pathExtension] isEqualToString:@"jpg"])
+			{
+			[theAssets addObject:theURL];
+			}
+		}
+	self.assets = theAssets;
+	self.cellCount = self.assets.count;
+	#endif
+#else
 	// Don't do this.
 	self.assetsLibrary = [[ALAssetsLibrary alloc] init];
 	[self.assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop1) {
+		NSMutableArray *theAssets = [NSMutableArray array];
 		[group enumerateAssetsUsingBlock:^(ALAsset *asset, NSUInteger index, BOOL *stop2) {
 			if (theAssets.count > 100)
 				{
@@ -55,17 +71,7 @@
 
 		*stop1 = YES;
 		} failureBlock:NULL];
-
-	}
-
-- (void)viewDidAppear:(BOOL)animated
-	{
-	CALayer *theLayer = [CALayer layer];
-	theLayer.borderWidth = 1.0;
-	theLayer.borderColor = [UIColor whiteColor].CGColor;
-	theLayer.bounds = (CGRect){ .size = { 100, 100 } };
-	theLayer.position = (CGPoint){ CGRectGetMidX(self.view.bounds), CGRectGetMidY(self.view.bounds) };
-	[self.view.layer addSublayer:theLayer];
+#endif
 	}
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section;
@@ -77,23 +83,29 @@
 	{
 	CDemoCollectionViewCell *theCell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"DEMO_CELL" forIndexPath:indexPath];
 
+	theCell.informationLabel.hidden = YES;
+
 	if (theCell.gestureRecognizers.count == 0)
 		{
 		[theCell addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)]];
 		}
 
+	theCell.backgroundColor = [UIColor colorWithHue:(float)indexPath.row / (float)self.cellCount saturation:0.333 brightness:1.0 alpha:1.0];
 
 	if (indexPath.row < self.assets.count)
 		{
+#if TARGET_IPHONE_SIMULATOR == 1
+		NSURL *theURL = [self.assets objectAtIndex:indexPath.row];
+		UIImage *theImage = [UIImage imageWithContentsOfFile:theURL.path];
+		theCell.imageView.image = theImage;
+		theCell.reflectionImageView.image = [theImage reflectedImageWithHeight:theCell.reflectionImageView.bounds.size.height];
+		theCell.backgroundColor = [UIColor clearColor];
+#else
 		ALAsset *theAsset = [self.assets objectAtIndex:indexPath.row];
 		theCell.imageView.image = [UIImage imageWithCGImage:theAsset.thumbnail];
-
 		theCell.reflectionImageView.image = [[UIImage imageWithCGImage:theAsset.thumbnail] reflectedImageWithHeight:theCell.reflectionImageView.bounds.size.height];
 		theCell.backgroundColor = [UIColor clearColor];
-		}
-	else
-		{
-		theCell.backgroundColor = [UIColor colorWithHue:(float)indexPath.row / (float)self.cellCount saturation:0.333 brightness:1.0 alpha:1.0];
+#endif
 		}
 
 	return(theCell);
