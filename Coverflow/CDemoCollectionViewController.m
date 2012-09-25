@@ -12,6 +12,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 
 #import "CDemoCollectionViewCell.h"
+#import "UIImage+Reflections.h"
 
 @interface CDemoCollectionViewController ()
 @property (readwrite, nonatomic, strong) ALAssetsLibrary *assetsLibrary;
@@ -82,12 +83,17 @@
 		}
 
 
-	theCell.backgroundColor = [UIColor colorWithHue:(float)indexPath.row / (float)self.cellCount saturation:0.333 brightness:1.0 alpha:1.0];
-
 	if (indexPath.row < self.assets.count)
 		{
 		ALAsset *theAsset = [self.assets objectAtIndex:indexPath.row];
 		theCell.imageView.image = [UIImage imageWithCGImage:theAsset.thumbnail];
+
+		theCell.reflectionImageView.image = [[UIImage imageWithCGImage:theAsset.thumbnail] reflectedImageWithHeight:theCell.reflectionImageView.bounds.size.height];
+		theCell.backgroundColor = [UIColor clearColor];
+		}
+	else
+		{
+		theCell.backgroundColor = [UIColor colorWithHue:(float)indexPath.row / (float)self.cellCount saturation:0.333 brightness:1.0 alpha:1.0];
 		}
 
 	return(theCell);

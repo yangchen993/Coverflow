@@ -20,8 +20,6 @@
     return(self);
     }
 
-
-
 - (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes
     {
     [super applyLayoutAttributes:layoutAttributes];

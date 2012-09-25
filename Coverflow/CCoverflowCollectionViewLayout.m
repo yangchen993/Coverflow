@@ -34,7 +34,7 @@
 
 - (void)awakeFromNib
 	{
-    self.cellSize = (CGSize){ 200, 200 };
+    self.cellSize = (CGSize){ 200, 300 };
     self.cellSpacing = (CGSize){ 200, 0 };
 	self.snapToCells = YES;
 
