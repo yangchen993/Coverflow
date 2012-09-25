@@ -10,7 +10,7 @@
 
 @implementation UIImage (Reflections)
 
-CGImageRef CreateGradientImage(int pixelsWide, int pixelsHigh)
+CGImageRef CreateGradientImage(NSUInteger pixelsWide, NSUInteger pixelsHigh)
 {
 	CGImageRef theCGImage = NULL;
 
@@ -46,7 +46,7 @@ CGImageRef CreateGradientImage(int pixelsWide, int pixelsHigh)
     return theCGImage;
 }
 
-CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh)
+CGContextRef MyCreateBitmapContext(NSUInteger pixelsWide, NSUInteger pixelsHigh)
 {
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
 	
@@ -62,11 +62,11 @@ CGContextRef MyCreateBitmapContext(int pixelsWide, int pixelsHigh)
 
 - (UIImage *)reflectedImageWithHeight:(NSUInteger)height
 {
-    if(height == 0)
+    if( height == 0)
 		return nil;
     
 	// create a bitmap graphics context the size of the image
-	CGContextRef mainViewContentContext = MyCreateBitmapContext(self.size.width, height);
+	CGContextRef mainViewContentContext = MyCreateBitmapContext((NSUInteger)ceil(self.size.width), height);
 	
 	// create a 2 bit CGImage containing a gradient that will be used for masking the 
 	// main view content to create the 'fade' of the reflection.  The CGImageCreateWithMask
