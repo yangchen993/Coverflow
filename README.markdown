@@ -21,3 +21,4 @@ CInterpolator objects are a little like CAKeyFrameAnimation objects except they'
 * The "Gloom" layer doesn't do a very good job with alpha backgrounds.
 * Aliasing is very obvious on straight edges when rotation.
 * Test on low end hardware.
+* See how often interpolators are called with same the key - might be small Optimisation point?
