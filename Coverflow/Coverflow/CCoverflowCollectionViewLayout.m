@@ -41,7 +41,7 @@
 	self.snapToCells = YES;
 
     self.positionoffsetInterpolator = [[CInterpolator interpolatorWithDictionary:@{
-		@(-1.0f):               @(-80.0f),
+		@(-1.0f):               @(-self.cellSpacing.width * 2.0f),
 		@(-0.5f - FLT_EPSILON): @(  0.0f),
 		}] interpolatorWithReflection:YES];
 
@@ -62,8 +62,8 @@
 		}] interpolatorWithReflection:NO];
 
 	self.darknessInterpolator = [[CInterpolator interpolatorWithDictionary:@{
-		@(-0.5f):  @(0.5f),
-		@(-0.25f): @(0.0f),
+		@(-2.5f): @(0.5f),
+		@(-0.5f): @(0.0f),
 		}] interpolatorWithReflection:NO];
 	}
 
