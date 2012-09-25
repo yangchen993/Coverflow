@@ -17,6 +17,8 @@
 		4522517116123719007FEECC /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 452250FC16123719007FEECC /* MainStoryboard.storyboard */; };
 		452251DB16123719007FEECC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4522516816123719007FEECC /* main.m */; };
 		452251DD1612372B007FEECC /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 452251DC1612372B007FEECC /* Images */; };
+		452251E716124093007FEECC /* CCoverflowTitleView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 452251E616124093007FEECC /* CCoverflowTitleView.xib */; };
+		452251EA161240A6007FEECC /* CCCoverflowTitleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 452251E9161240A6007FEECC /* CCCoverflowTitleView.m */; };
 		456BDDD41610896400398F00 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 456BDDD31610896400398F00 /* UIKit.framework */; };
 		456BDDD61610896400398F00 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 456BDDD51610896400398F00 /* Foundation.framework */; };
 		456BDDD81610896400398F00 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 456BDDD71610896400398F00 /* CoreGraphics.framework */; };
@@ -46,6 +48,9 @@
 		452250FD16123719007FEECC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		4522516816123719007FEECC /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		452251DC1612372B007FEECC /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
+		452251E616124093007FEECC /* CCoverflowTitleView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CCoverflowTitleView.xib; sourceTree = "<group>"; };
+		452251E8161240A6007FEECC /* CCCoverflowTitleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCoverflowTitleView.h; sourceTree = "<group>"; };
+		452251E9161240A6007FEECC /* CCCoverflowTitleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCCoverflowTitleView.m; sourceTree = "<group>"; };
 		456BDDCF1610896400398F00 /* Coverflow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Coverflow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		456BDDD31610896400398F00 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		456BDDD51610896400398F00 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -98,6 +103,9 @@
 				452250F916123719007FEECC /* Default@2x.png */,
 				452250FA16123719007FEECC /* InfoPlist.strings */,
 				452250FC16123719007FEECC /* MainStoryboard.storyboard */,
+				452251E616124093007FEECC /* CCoverflowTitleView.xib */,
+				452251E8161240A6007FEECC /* CCCoverflowTitleView.h */,
+				452251E9161240A6007FEECC /* CCCoverflowTitleView.m */,
 				452251DC1612372B007FEECC /* Images */,
 				4522516816123719007FEECC /* main.m */,
 			);
@@ -213,6 +221,7 @@
 				4522517016123719007FEECC /* InfoPlist.strings in Resources */,
 				4522517116123719007FEECC /* MainStoryboard.storyboard in Resources */,
 				452251DD1612372B007FEECC /* Images in Resources */,
+				452251E716124093007FEECC /* CCoverflowTitleView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,6 +242,7 @@
 				4522516A16123719007FEECC /* CDemoCollectionViewCell.m in Sources */,
 				4522516B16123719007FEECC /* CDemoCollectionViewController.m in Sources */,
 				452251DB16123719007FEECC /* main.m in Sources */,
+				452251EA161240A6007FEECC /* CCCoverflowTitleView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

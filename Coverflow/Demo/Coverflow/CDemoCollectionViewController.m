@@ -13,6 +13,7 @@
 
 #import "CDemoCollectionViewCell.h"
 #import "UIImage+Reflections.h"
+#import "CCCoverflowTitleView.h"
 
 @interface CDemoCollectionViewController ()
 @property (readwrite, nonatomic, strong) ALAssetsLibrary *assetsLibrary;
@@ -25,6 +26,8 @@
 - (void)viewDidLoad
 	{
 	[super viewDidLoad];
+
+	[self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([CCCoverflowTitleView class]) bundle:NULL] forSupplementaryViewOfKind:@"title" withReuseIdentifier:@"title"];
 
 	self.cellCount = 10;
 
@@ -105,6 +108,14 @@
 
 	return(theCell);
 	}
+
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+	{
+	UICollectionReusableView *theView = [self.collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"title" forIndexPath:indexPath];
+	return(theView);
+	}
+
+#pragma mark -
 
 - (void)tap:(UITapGestureRecognizer *)inGestureRecognizer
 	{
