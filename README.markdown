@@ -19,3 +19,6 @@ CInterpolator objects are a little like CAKeyFrameAnimation objects except they'
 * The "Gloom" layer doesn't do a very good job with alpha backgrounds.
 * Aliasing is very obvious on straight edges when rotation.
 * Test on low end hardware.
+* Shadow needs to be longer to deal with perspective transform. See next item.
+* Need to specify manually the Y position of cells so that we can force cells to draw offscreen (for shadows). Or just rely on UIKit's ability to not clip to bounds.
+* Possibly cache the shadow.
