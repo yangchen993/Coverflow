@@ -94,6 +94,7 @@
 	{
     NSMutableArray *theLayoutAttributes = [NSMutableArray array];
 
+	// TODO -- 3 is a bit of a fudge to make sure we get all cells... Ideally we should compute the right number of extra cells to fetch...
     NSInteger theStart = MIN(MAX((NSInteger)floorf(CGRectGetMinX(rect) / self.cellSpacing.width) - 3, 0), self.cellCount);
     NSInteger theEnd = MIN(MAX((NSInteger)ceilf(CGRectGetMaxX(rect) / self.cellSpacing.width) + 3, 0), self.cellCount);
 
