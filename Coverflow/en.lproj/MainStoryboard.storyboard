@@ -25,13 +25,6 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </imageView>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Info" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ycu-Ug-89v">
-                                            <rect key="frame" x="20" y="51" width="160" height="92"/>
-                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="TSD-A2-1h1">
                                             <rect key="frame" x="0.0" y="247" width="200" height="53"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -43,7 +36,6 @@
                                 <size key="customSize" width="200" height="300"/>
                                 <connections>
                                     <outlet property="imageView" destination="bnL-P1-tcf" id="rQy-xF-GUs"/>
-                                    <outlet property="informationLabel" destination="Ycu-Ug-89v" id="4E7-Vg-AVH"/>
                                     <outlet property="reflectionImageView" destination="TSD-A2-1h1" id="BBb-e2-207"/>
                                 </connections>
                             </collectionViewCell>
@@ -73,7 +65,6 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CDemoCollectionViewCell.h"/>
             <relationships>
                 <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="informationLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="reflectionImageView" candidateClass="UIImageView"/>
             </relationships>
         </class>

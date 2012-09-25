@@ -9,7 +9,6 @@
 #import "CBetterCollectionViewCell.h"
 
 @interface CDemoCollectionViewCell : CBetterCollectionViewCell
-@property (readwrite, nonatomic, weak) IBOutlet UILabel *informationLabel;
 @property (readwrite, nonatomic, weak) IBOutlet UIImageView *imageView;
 @property (readwrite, nonatomic, weak) IBOutlet UIImageView *reflectionImageView;
 @end

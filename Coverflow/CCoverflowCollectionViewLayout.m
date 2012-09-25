@@ -127,7 +127,6 @@
 
 	// #########################################################################
 
-
     const CGFloat thePosition = (theRow + 0.5f) * (self.cellSpacing.width) + [self.positionoffsetInterpolator interpolatedValueForKey:theDelta];
 	theAttributes.center = (CGPoint){ thePosition + self.centerOffset, CGRectGetMidY(theViewBounds) };
 

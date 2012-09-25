@@ -83,8 +83,6 @@
 	{
 	CDemoCollectionViewCell *theCell = [self.collectionView dequeueReusableCellWithReuseIdentifier:@"DEMO_CELL" forIndexPath:indexPath];
 
-	theCell.informationLabel.hidden = YES;
-
 	if (theCell.gestureRecognizers.count == 0)
 		{
 		[theCell addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)]];

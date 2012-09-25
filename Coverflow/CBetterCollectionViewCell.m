@@ -45,5 +45,4 @@
     return(theShield);
     }
 
-
 @end
