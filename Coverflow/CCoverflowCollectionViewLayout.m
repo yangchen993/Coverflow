@@ -12,6 +12,7 @@
 
 #import "CBetterCollectionViewLayoutAttributes.h"
 
+// If we decide to make this vertical we could use these macros to help make it painless...
 //#define XORY(axis, point) ((axis) ? (point.y) : (point.x))
 //#define WORH(axis, size) ((axis) ? (size.height) : (size.width))
 
@@ -19,10 +20,10 @@
 @property (readwrite, nonatomic, assign) CGFloat centerOffset;
 @property (readwrite, nonatomic, assign) NSInteger cellCount;
 @property (readwrite, nonatomic, strong) CInterpolator *scaleInterpolator;
-@property (readwrite, nonatomic, strong) CInterpolator *positionInterpolator;
-@property (readwrite, nonatomic, strong) CInterpolator *darknessInterpolator;
+@property (readwrite, nonatomic, strong) CInterpolator *positionoffsetInterpolator;
 @property (readwrite, nonatomic, strong) CInterpolator *rotationInterpolator;
-@property (readwrite, nonatomic, strong) CInterpolator *zIndexInterpolator;
+@property (readwrite, nonatomic, strong) CInterpolator *zOffsetInterpolator;
+@property (readwrite, nonatomic, strong) CInterpolator *darknessInterpolator;
 @end
 
 @implementation CCoverflowCollectionViewLayout
@@ -34,33 +35,34 @@
 
 - (void)awakeFromNib
 	{
-    self.cellSize = (CGSize){ 200, 300 };
-    self.cellSpacing = (CGSize){ 200, 0 };
+    self.cellSize = (CGSize){ 200.0f, 300.0f };
+    self.cellSpacing = (CGSize){ 40.0f, 0.0f };
 	self.snapToCells = YES;
 
-    self.positionInterpolator = [[CInterpolator interpolatorWithDictionary:@{
-		@(-1.0):                 @( 0.5),
-		@(-0.5 - FLT_EPSILON):  @( 0.5),
-		@(-0.5):                @( 0.0),
-		}] interpolatorWithReflection:NO];
-
-    self.positionInterpolator = [CInterpolator interpolatorWithDictionary:@{
-		@(-0.0):                 @( 0.5),
-		}];
+    self.positionoffsetInterpolator = [[CInterpolator interpolatorWithDictionary:@{
+		@(-1.0f):               @(-80.0f),
+		@(-0.5f - FLT_EPSILON): @(  0.0f),
+		}] interpolatorWithReflection:YES];
 
 	self.rotationInterpolator = [[CInterpolator interpolatorWithDictionary:@{
-		@(-0.5):  @(80.0),
-		@(-0.25): @( 0.0),
+		@(-0.5f):  @(50.0f),
+		@(-0.25f): @( 0.0f),
 		}] interpolatorWithReflection:YES];
 
 	self.scaleInterpolator = [[CInterpolator interpolatorWithDictionary:@{
-		@(-1.0):               @(  0.9),
-		@(-0.5):               @(  1.0),
+		@(-1.0f): @(0.9),
+		@(-0.5f): @(1.0f),
+		}] interpolatorWithReflection:NO];
+
+	self.zOffsetInterpolator = [[CInterpolator interpolatorWithDictionary:@{
+		@(-9.0f):               @(9.0f),
+		@(-1.0f - FLT_EPSILON): @(1.0f),
+		@(-1.0f):               @(0.0f),
 		}] interpolatorWithReflection:NO];
 
 	self.darknessInterpolator = [[CInterpolator interpolatorWithDictionary:@{
-		@(-0.5):  @(0.5),
-		@(-0.25): @(1.0),
+		@(-0.5f):  @(0.5f),
+		@(-0.25f): @(0.0f),
 		}] interpolatorWithReflection:NO];
 	}
 
@@ -68,7 +70,7 @@
     {
     [super prepareLayout];
 
-	self.centerOffset = (self.collectionView.bounds.size.width - self.cellSpacing.width) * 0.5;
+	self.centerOffset = (self.collectionView.bounds.size.width - self.cellSpacing.width) * 0.5f;
 
     self.cellCount = [self.collectionView numberOfItemsInSection:0];
 	}
@@ -80,9 +82,9 @@
 
 - (CGSize)collectionViewContentSize
 	{
-	#warning TODO
     const CGSize theSize = {
-        .width = 10000, // self.cellSpacing.width * self.cellCount + fabs(self.centerOffset) * 2,
+		#warning TODO width is not accurate yet.
+        .width = 10000, // self.cellSpacing.width * self.cellCount,
         .height = self.collectionView.bounds.size.height,
         };
     return(theSize);
@@ -91,8 +93,11 @@
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
 	{
     NSMutableArray *theLayoutAttributes = [NSMutableArray array];
+
+	#warning TODO Currently returning _all_ cells. We need to pick sane start and stops...
 	NSInteger theStart = 0;
 	NSInteger theStop = self.cellCount;
+
     for (NSInteger N = theStart; N != theStop; ++N)
         {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:N inSection:0];
@@ -109,7 +114,7 @@
 - (UICollectionViewLayoutAttributes *)layoutAttributesForItemAtIndexPath:(NSIndexPath *)indexPath
 	{
 	// Capture some commonly used variables...
-    const CGFloat N = indexPath.row;
+    const CGFloat theRow = indexPath.row;
 	const CGRect theViewBounds = self.collectionView.bounds;
 
     CBetterCollectionViewLayoutAttributes *theAttributes = [[[self class] layoutAttributesClass] layoutAttributesForCellWithIndexPath:indexPath];
@@ -118,49 +123,35 @@
 	// #########################################################################
 
 	// Delta is distance from center of the view in cellSpacing units...
-	const CGFloat theDelta = ((N + 0.5f) * self.cellSpacing.width + self.centerOffset - theViewBounds.size.width * 0.5f - self.collectionView.contentOffset.x) / self.cellSpacing.width;
-
-	CGFloat thePositionMultiplier = [self.positionInterpolator interpolatedValueForKey:theDelta];
-#warning TODO
-	thePositionMultiplier = 1.0;
-	
-    CGFloat thePosition = self.cellSpacing.width * 0.5f + N * (self.cellSpacing.width * thePositionMultiplier);
-	theAttributes.center = (CGPoint){ thePosition + self.centerOffset, CGRectGetMidY(theViewBounds) };
-
-
-	const CGFloat theAdjustedDelta = ((N + 0.5f) * self.cellSpacing.width + self.centerOffset - theViewBounds.size.width * 0.5f - self.collectionView.contentOffset.x) / self.cellSpacing.width;
+	const CGFloat theDelta = ((theRow + 0.5f) * self.cellSpacing.width + self.centerOffset - theViewBounds.size.width * 0.5f - self.collectionView.contentOffset.x) / self.cellSpacing.width;
 
 	// #########################################################################
-	CATransform3D theTransform = CATransform3DIdentity;
-	theTransform.m34 = 1.0f / -20000.0f; // Magic Number is Magic.
 
-    const CGFloat theScale = [self.scaleInterpolator interpolatedValueForKey:theAdjustedDelta];
+
+    const CGFloat thePosition = (theRow + 0.5f) * (self.cellSpacing.width) + [self.positionoffsetInterpolator interpolatedValueForKey:theDelta];
+	theAttributes.center = (CGPoint){ thePosition + self.centerOffset, CGRectGetMidY(theViewBounds) };
+
+	// #########################################################################
+
+	CATransform3D theTransform = CATransform3DIdentity;
+	theTransform.m34 = 1.0f / -850.0f; // Magic Number is Magic.
+
+    const CGFloat theScale = [self.scaleInterpolator interpolatedValueForKey:theDelta];
     theTransform = CATransform3DScale(theTransform, theScale, theScale, 1.0f);
 
-	const CGFloat theRotation = [self.rotationInterpolator interpolatedValueForKey:theAdjustedDelta];
+	const CGFloat theRotation = [self.rotationInterpolator interpolatedValueForKey:theDelta];
+	theTransform = CATransform3DTranslate(theTransform, self.cellSize.width * (theDelta > 0.0f ? 0.5f : -0.5f), 0.0f, 0.0f);
 	theTransform = CATransform3DRotate(theTransform, theRotation * (CGFloat)M_PI / 180.0f, 0.0f, 1.0f, 0.0f);
+	theTransform = CATransform3DTranslate(theTransform, self.cellSize.width * (theDelta > 0.0f ? -0.5f : 0.5f), 0.0f, 0.0f);
 
-//	CGFloat theZIndex = [self.zIndexInterpolator interpolatedValueForKey:theAdjustedDelta];
-//	theTransform = CATransform3DTranslate(theTransform, 0.0, 0.0, -theZIndex * 3000.0 * 10.0);
-//	theAttributes.zIndex = theZIndex;
+	const CGFloat theZOffset = [self.zOffsetInterpolator interpolatedValueForKey:theDelta];
+	theTransform = CATransform3DTranslate(theTransform, 0.0, 0.0, theZOffset);
 
 	theAttributes.transform3D = theTransform;
 
 	// #########################################################################
 
-//	theAttributes.shieldAlpha = 1.0 - [self.darknessInterpolator interpolatedValueForKey:theDelta];
-
-	// #########################################################################
-
-	// TODO - this is just for debugging...
-	theAttributes.userInfo = @{
-		@"delta": @(theDelta),
-//		@"rotation": @(theRotation),
-//		@"scale": @(theScale),
-//		@"Z": @(theZIndex),
-		@"contentOffset": @(self.collectionView.contentOffset.x),
-		@"P": @(thePositionMultiplier),
-		};
+	theAttributes.shieldAlpha = [self.darknessInterpolator interpolatedValueForKey:theDelta];
 
 	// #########################################################################
 
