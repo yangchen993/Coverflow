@@ -24,6 +24,7 @@
 		456BDE0716108D7A00398F00 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 456BDE0616108D7A00398F00 /* QuartzCore.framework */; };
 		456BDE0A161091A300398F00 /* CDemoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 456BDE09161091A300398F00 /* CDemoCollectionViewCell.m */; };
 		456BDE0D161092AA00398F00 /* CBetterCollectionViewLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 456BDE0C161092AA00398F00 /* CBetterCollectionViewLayoutAttributes.m */; };
+		4576D0A1161230660006877C /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 4576D0A0161230660006877C /* Images */; };
 		457EC0751611645D0059837C /* UIImage+Reflections.m in Sources */ = {isa = PBXBuildFile; fileRef = 457EC0741611645D0059837C /* UIImage+Reflections.m */; };
 		458DD6071610D71A00DB2DD2 /* CBetterCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 458DD6061610D71A00DB2DD2 /* CBetterCollectionViewCell.m */; };
 		458DD6161610F71C00DB2DD2 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 458DD6151610F71C00DB2DD2 /* AssetsLibrary.framework */; };
@@ -57,6 +58,7 @@
 		456BDE09161091A300398F00 /* CDemoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDemoCollectionViewCell.m; sourceTree = "<group>"; };
 		456BDE0B161092AA00398F00 /* CBetterCollectionViewLayoutAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBetterCollectionViewLayoutAttributes.h; sourceTree = "<group>"; };
 		456BDE0C161092AA00398F00 /* CBetterCollectionViewLayoutAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CBetterCollectionViewLayoutAttributes.m; sourceTree = "<group>"; };
+		4576D0A0161230660006877C /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = "<group>"; };
 		457EC0731611645D0059837C /* UIImage+Reflections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Reflections.h"; sourceTree = "<group>"; };
 		457EC0741611645D0059837C /* UIImage+Reflections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Reflections.m"; sourceTree = "<group>"; };
 		458DD6051610D71A00DB2DD2 /* CBetterCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CBetterCollectionViewCell.h; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 				456BDE0116108B0800398F00 /* CInterpolator.mm */,
 				456BDE0216108B0800398F00 /* Interpolator.h */,
 				456BDE0316108B0800398F00 /* Interpolator.cpp */,
+				4576D0A0161230660006877C /* Images */,
 				456BDDDA1610896400398F00 /* Supporting Files */,
 			);
 			path = Coverflow;
@@ -207,6 +210,7 @@
 				456BDDE81610896400398F00 /* Default@2x.png in Resources */,
 				456BDDEA1610896400398F00 /* Default-568h@2x.png in Resources */,
 				456BDDED1610896400398F00 /* MainStoryboard.storyboard in Resources */,
+				4576D0A1161230660006877C /* Images in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
