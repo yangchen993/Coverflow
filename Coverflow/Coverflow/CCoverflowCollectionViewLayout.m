@@ -84,8 +84,7 @@
 - (CGSize)collectionViewContentSize
 	{
     const CGSize theSize = {
-		#warning TODO width is not accurate yet.
-        .width = 10000, // self.cellSpacing.width * self.cellCount,
+        .width = self.cellSpacing.width * self.cellCount + self.centerOffset * 2.0f,
         .height = self.collectionView.bounds.size.height,
         };
     return(theSize);
@@ -95,11 +94,10 @@
 	{
     NSMutableArray *theLayoutAttributes = [NSMutableArray array];
 
-	#warning TODO Currently returning _all_ cells. We need to pick sane start and stops...
-	NSInteger theStart = 0;
-	NSInteger theStop = self.cellCount;
+    NSInteger theStart = MIN(MAX((NSInteger)floorf(CGRectGetMinX(rect) / self.cellSpacing.width) - 3, 0), self.cellCount);
+    NSInteger theEnd = MIN(MAX((NSInteger)ceilf(CGRectGetMaxX(rect) / self.cellSpacing.width) + 3, 0), self.cellCount);
 
-    for (NSInteger N = theStart; N != theStop; ++N)
+    for (NSInteger N = theStart; N != theEnd; ++N)
         {
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:N inSection:0];
 
@@ -157,7 +155,6 @@
 
     return(theAttributes);
 	}
-
 
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity
     {

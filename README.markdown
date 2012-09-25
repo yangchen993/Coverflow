@@ -16,8 +16,6 @@ CInterpolator objects are a little like CAKeyFrameAnimation objects except they'
 
 ## TODO
 
-* Optimisation. Right now it is laying out _every_ cell. This is bad bad bad! (Easily fixed)
-* Bounds calculation. It has a hardcoded width for the content bounds.
 * The "Gloom" layer doesn't do a very good job with alpha backgrounds.
 * Aliasing is very obvious on straight edges when rotation.
 * Test on low end hardware.
