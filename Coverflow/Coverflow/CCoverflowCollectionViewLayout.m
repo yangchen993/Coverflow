@@ -35,6 +35,7 @@
 
 - (void)awakeFromNib
 	{
+	// TODO I don't like putting this in awakeFromNib - but init is never called. Silly.
     self.cellSize = (CGSize){ 200.0f, 300.0f };
     self.cellSpacing = (CGSize){ 40.0f, 0.0f };
 	self.snapToCells = YES;
