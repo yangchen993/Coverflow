@@ -28,9 +28,7 @@
 
 	self.cellCount = 10;
 
-#if TARGET_IPHONE_SIMULATOR == 1
-	// Don't do this either...
-	#if 1
+#if 1
 	NSMutableArray *theAssets = [NSMutableArray array];
 	NSURL *theURL = [[[NSBundle mainBundle] resourceURL] URLByAppendingPathComponent:@"Images"];
 	NSEnumerator *theEnumerator = [[NSFileManager defaultManager] enumeratorAtURL:theURL includingPropertiesForKeys:NULL options:NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsHiddenFiles errorHandler:NULL];
@@ -43,7 +41,6 @@
 		}
 	self.assets = theAssets;
 	self.cellCount = self.assets.count;
-	#endif
 #else
 	// Don't do this.
 	self.assetsLibrary = [[ALAssetsLibrary alloc] init];
@@ -92,7 +89,7 @@
 
 	if (indexPath.row < self.assets.count)
 		{
-#if TARGET_IPHONE_SIMULATOR == 1
+#if 1
 		NSURL *theURL = [self.assets objectAtIndex:indexPath.row];
 		UIImage *theImage = [UIImage imageWithContentsOfFile:theURL.path];
 		theCell.imageView.image = theImage;
