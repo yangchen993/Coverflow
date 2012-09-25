@@ -44,6 +44,10 @@
 		@(-0.5):                @( 0.0),
 		}] interpolatorWithReflection:NO];
 
+    self.positionInterpolator = [CInterpolator interpolatorWithDictionary:@{
+		@(-0.0):                 @( 0.5),
+		}];
+
 	self.rotationInterpolator = [[CInterpolator interpolatorWithDictionary:@{
 		@(-0.5):  @(80.0),
 		@(-0.25): @( 0.0),
@@ -108,8 +112,6 @@
     const CGFloat N = indexPath.row;
 	const CGRect theViewBounds = self.collectionView.bounds;
 
-	// Get a cached attributes object or create a new one...
-	// TODO: Not sure if caching helps or hinders.
     CBetterCollectionViewLayoutAttributes *theAttributes = [[[self class] layoutAttributesClass] layoutAttributesForCellWithIndexPath:indexPath];
 	theAttributes.size = self.cellSize;
 
@@ -118,17 +120,30 @@
 	// Delta is distance from center of the view in cellSpacing units...
 	const CGFloat theDelta = ((N + 0.5f) * self.cellSpacing.width + self.centerOffset - theViewBounds.size.width * 0.5f - self.collectionView.contentOffset.x) / self.cellSpacing.width;
 
+	CGFloat thePositionMultiplier = [self.positionInterpolator interpolatedValueForKey:theDelta];
+#warning TODO
+	thePositionMultiplier = 1.0;
+	
+    CGFloat thePosition = self.cellSpacing.width * 0.5f + N * (self.cellSpacing.width * thePositionMultiplier);
+	theAttributes.center = (CGPoint){ thePosition + self.centerOffset, CGRectGetMidY(theViewBounds) };
+
+
+	const CGFloat theAdjustedDelta = ((N + 0.5f) * self.cellSpacing.width + self.centerOffset - theViewBounds.size.width * 0.5f - self.collectionView.contentOffset.x) / self.cellSpacing.width;
+
+	// #########################################################################
+
+
 	// #########################################################################
 	CATransform3D theTransform = CATransform3DIdentity;
 	theTransform.m34 = 1.0f / -2000.0f; // Magic Number is Magic.
 
-    const CGFloat theScale = [self.scaleInterpolator interpolatedValueForKey:theDelta];
+    const CGFloat theScale = [self.scaleInterpolator interpolatedValueForKey:theAdjustedDelta];
     theTransform = CATransform3DScale(theTransform, theScale, theScale, 1.0f);
 
-	const CGFloat theRotation = [self.rotationInterpolator interpolatedValueForKey:theDelta];
+	const CGFloat theRotation = [self.rotationInterpolator interpolatedValueForKey:theAdjustedDelta];
 	theTransform = CATransform3DRotate(theTransform, theRotation * (CGFloat)M_PI / 180.0f, 0.0f, 1.0f, 0.0f);
 
-//	CGFloat theZIndex = [self.zIndexInterpolator interpolatedValueForKey:theDelta];
+//	CGFloat theZIndex = [self.zIndexInterpolator interpolatedValueForKey:theAdjustedDelta];
 //	theTransform = CATransform3DTranslate(theTransform, 0.0, 0.0, -theZIndex * 3000.0 * 10.0);
 //	theAttributes.zIndex = theZIndex;
 
@@ -137,15 +152,6 @@
 	// #########################################################################
 
 //	theAttributes.shieldAlpha = 1.0 - [self.darknessInterpolator interpolatedValueForKey:theDelta];
-
-	// #########################################################################
-
-	#warning TODO
-
-	CGFloat thePositionMultiplier = self.positionInterpolator ? [self.positionInterpolator interpolatedValueForKey:theDelta] : 0.0f;
-    CGFloat thePosition = ((N + 0.5f) * self.cellSpacing.width);
-	thePosition += thePositionMultiplier * self.cellSpacing.width;
-	theAttributes.center = (CGPoint){ thePosition + self.centerOffset, CGRectGetMidY(theViewBounds) };
 
 	// #########################################################################
 
