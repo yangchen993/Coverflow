@@ -14,6 +14,7 @@
 #import "CDemoCollectionViewCell.h"
 #import "UIImage+Reflections.h"
 #import "CCoverflowTitleView.h"
+#import "CCoverflowCollectionViewLayout.h"
 
 @interface CDemoCollectionViewController ()
 @property (readwrite, nonatomic, strong) ALAssetsLibrary *assetsLibrary;
@@ -80,17 +81,22 @@
 
 - (void)updateTitle
 	{
-	NSIndexPath *theIndexPath = [self.collectionView indexPathForItemAtPoint:(CGPoint){ CGRectGetMidX(self.collectionView.frame) + self.collectionView.contentOffset.x, CGRectGetMidY(self.collectionView.frame) }];
-//	if (theIndexPath == NULL)
-//		{
-//		self.titleView.titleLabel.text = NULL;
-//		}
-//	else
-//		{
-//		NSURL *theURL = [self.assets objectAtIndex:theIndexPath.row];
-//
-//		self.titleView.titleLabel.text = [NSString stringWithFormat:@"%@", theURL.lastPathComponent];
-//		}
+//	NSLog(@"%@", self.collectionView.indexPathsForVisibleItems);
+
+
+
+//	NSIndexPath *theIndexPath = [self.collectionView indexPathForItemAtPoint:(CGPoint){ CGRectGetMidX(self.collectionView.frame) + self.collectionView.contentOffset.x, CGRectGetMidY(self.collectionView.frame) }];
+	NSIndexPath *theIndexPath = ((CCoverflowCollectionViewLayout *)self.collectionView.collectionViewLayout).currentIndexPath;
+	if (theIndexPath == NULL)
+		{
+		self.titleView.titleLabel.text = NULL;
+		}
+	else
+		{
+		NSURL *theURL = [self.assets objectAtIndex:theIndexPath.row];
+
+		self.titleView.titleLabel.text = [NSString stringWithFormat:@"%@", theURL.lastPathComponent];
+		}
 	}
 
 #pragma mark -

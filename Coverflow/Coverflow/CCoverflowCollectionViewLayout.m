@@ -17,6 +17,8 @@
 //#define WORH(axis, size) ((axis) ? (size.height) : (size.width))
 
 @interface CCoverflowCollectionViewLayout ()
+@property (readwrite, nonatomic, strong) NSIndexPath *currentIndexPath;
+
 @property (readwrite, nonatomic, assign) CGFloat centerOffset;
 @property (readwrite, nonatomic, assign) NSInteger cellCount;
 @property (readwrite, nonatomic, strong) CInterpolator *scaleInterpolator;
@@ -129,6 +131,12 @@
 
 	// Delta is distance from center of the view in cellSpacing units...
 	const CGFloat theDelta = ((theRow + 0.5f) * self.cellSpacing.width + self.centerOffset - theViewBounds.size.width * 0.5f - self.collectionView.contentOffset.x) / self.cellSpacing.width;
+
+	// TODO - we should write a getter for this that calculates the value. Setting it constantly is wasteful.
+	if (roundf(theDelta) == 0)
+		{
+		self.currentIndexPath = indexPath;
+		}
 
 	// #########################################################################
 
