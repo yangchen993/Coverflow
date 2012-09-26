@@ -81,10 +81,7 @@
 
 - (void)updateTitle
 	{
-//	NSLog(@"%@", self.collectionView.indexPathsForVisibleItems);
-
-
-
+// Asking a collection view for indexPathForItem inside a scrollViewDidScroll: callback seems unreliable.
 //	NSIndexPath *theIndexPath = [self.collectionView indexPathForItemAtPoint:(CGPoint){ CGRectGetMidX(self.collectionView.frame) + self.collectionView.contentOffset.x, CGRectGetMidY(self.collectionView.frame) }];
 	NSIndexPath *theIndexPath = ((CCoverflowCollectionViewLayout *)self.collectionView.collectionViewLayout).currentIndexPath;
 	if (theIndexPath == NULL)
