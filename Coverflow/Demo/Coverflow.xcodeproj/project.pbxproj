@@ -28,8 +28,8 @@
 		4576D0BC161236A10006877C /* CCoverflowCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 4576D0B3161236A10006877C /* CCoverflowCollectionViewLayout.m */; };
 		4576D0BD161236A10006877C /* CInterpolator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4576D0B5161236A10006877C /* CInterpolator.mm */; };
 		4576D0BE161236A10006877C /* Interpolator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4576D0B6161236A10006877C /* Interpolator.cpp */; };
-		4576D0BF161236A10006877C /* UIImage+Reflections.m in Sources */ = {isa = PBXBuildFile; fileRef = 4576D0B9161236A10006877C /* UIImage+Reflections.m */; };
 		458DD6161610F71C00DB2DD2 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 458DD6151610F71C00DB2DD2 /* AssetsLibrary.framework */; };
+		45C56F3F1612A5120066CADB /* CReflectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 45C56F3E1612A5120066CADB /* CReflectionView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,9 +66,9 @@
 		4576D0B5161236A10006877C /* CInterpolator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CInterpolator.mm; sourceTree = "<group>"; };
 		4576D0B6161236A10006877C /* Interpolator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Interpolator.cpp; sourceTree = "<group>"; };
 		4576D0B7161236A10006877C /* Interpolator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Interpolator.h; sourceTree = "<group>"; };
-		4576D0B8161236A10006877C /* UIImage+Reflections.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Reflections.h"; sourceTree = "<group>"; };
-		4576D0B9161236A10006877C /* UIImage+Reflections.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Reflections.m"; sourceTree = "<group>"; };
 		458DD6151610F71C00DB2DD2 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		45C56F3D1612A5120066CADB /* CReflectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CReflectionView.h; sourceTree = "<group>"; };
+		45C56F3E1612A5120066CADB /* CReflectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CReflectionView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,8 +156,8 @@
 				4576D0B5161236A10006877C /* CInterpolator.mm */,
 				4576D0B6161236A10006877C /* Interpolator.cpp */,
 				4576D0B7161236A10006877C /* Interpolator.h */,
-				4576D0B8161236A10006877C /* UIImage+Reflections.h */,
-				4576D0B9161236A10006877C /* UIImage+Reflections.m */,
+				45C56F3D1612A5120066CADB /* CReflectionView.h */,
+				45C56F3E1612A5120066CADB /* CReflectionView.m */,
 			);
 			name = Coverflow;
 			path = ../Coverflow;
@@ -237,12 +237,12 @@
 				4576D0BC161236A10006877C /* CCoverflowCollectionViewLayout.m in Sources */,
 				4576D0BD161236A10006877C /* CInterpolator.mm in Sources */,
 				4576D0BE161236A10006877C /* Interpolator.cpp in Sources */,
-				4576D0BF161236A10006877C /* UIImage+Reflections.m in Sources */,
 				4522516916123719007FEECC /* CAppDelegate.m in Sources */,
 				4522516A16123719007FEECC /* CDemoCollectionViewCell.m in Sources */,
 				4522516B16123719007FEECC /* CDemoCollectionViewController.m in Sources */,
 				452251DB16123719007FEECC /* main.m in Sources */,
 				452251EA161240A6007FEECC /* CCoverflowTitleView.m in Sources */,
+				45C56F3F1612A5120066CADB /* CReflectionView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

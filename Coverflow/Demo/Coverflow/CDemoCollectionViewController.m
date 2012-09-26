@@ -12,9 +12,9 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 
 #import "CDemoCollectionViewCell.h"
-#import "UIImage+Reflections.h"
 #import "CCoverflowTitleView.h"
 #import "CCoverflowCollectionViewLayout.h"
+#import "CReflectionView.h"
 
 @interface CDemoCollectionViewController ()
 @property (readwrite, nonatomic, strong) ALAssetsLibrary *assetsLibrary;
@@ -123,7 +123,7 @@
 		NSURL *theURL = [self.assets objectAtIndex:indexPath.row];
 		UIImage *theImage = [UIImage imageWithContentsOfFile:theURL.path];
 		theCell.imageView.image = theImage;
-		theCell.reflectionImageView.image = [theImage reflectedImageWithHeight:theCell.reflectionImageView.bounds.size.height];
+		theCell.reflectionImageView.image = theImage;
 		theCell.backgroundColor = [UIColor clearColor];
 #else
 		ALAsset *theAsset = [self.assets objectAtIndex:indexPath.row];

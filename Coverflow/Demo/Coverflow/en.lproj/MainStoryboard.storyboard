@@ -25,10 +25,11 @@
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </imageView>
-                                        <imageView opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" id="TSD-A2-1h1">
-                                            <rect key="frame" x="0.0" y="247" width="200" height="53"/>
+                                        <view contentMode="scaleToFill" id="STE-ws-qBe" customClass="CReflectionView">
+                                            <rect key="frame" x="0.0" y="249" width="200" height="51"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                        </imageView>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
@@ -36,7 +37,7 @@
                                 <size key="customSize" width="200" height="300"/>
                                 <connections>
                                     <outlet property="imageView" destination="bnL-P1-tcf" id="rQy-xF-GUs"/>
-                                    <outlet property="reflectionImageView" destination="TSD-A2-1h1" id="BBb-e2-207"/>
+                                    <outlet property="reflectionImageView" destination="STE-ws-qBe" id="tEa-7k-ItM"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -65,11 +66,14 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CDemoCollectionViewCell.h"/>
             <relationships>
                 <relationship kind="outlet" name="imageView" candidateClass="UIImageView"/>
-                <relationship kind="outlet" name="reflectionImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="reflectionImageView" candidateClass="CReflectionView"/>
             </relationships>
         </class>
         <class className="CDemoCollectionViewController" superclassName="UICollectionViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CDemoCollectionViewController.h"/>
+        </class>
+        <class className="CReflectionView" superclassName="UIView">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/CReflectionView.h"/>
         </class>
         <class className="UICollectionReusableView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/UICollectionReusableView.h"/>
