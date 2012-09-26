@@ -33,8 +33,6 @@
 
 	[self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([CCoverflowTitleView class]) bundle:NULL] forSupplementaryViewOfKind:@"title" withReuseIdentifier:@"title"];
 
-
-#if 1
 	NSMutableArray *theAssets = [NSMutableArray array];
 	NSURL *theURL = [[[NSBundle mainBundle] resourceURL] URLByAppendingPathComponent:@"Images"];
 	NSEnumerator *theEnumerator = [[NSFileManager defaultManager] enumeratorAtURL:theURL includingPropertiesForKeys:NULL options:NSDirectoryEnumerationSkipsPackageDescendants | NSDirectoryEnumerationSkipsHiddenFiles errorHandler:NULL];
@@ -47,34 +45,6 @@
 		}
 	self.assets = theAssets;
 	self.cellCount = self.assets.count;
-#else
-	// Don't do this.
-	self.assetsLibrary = [[ALAssetsLibrary alloc] init];
-	[self.assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupSavedPhotos usingBlock:^(ALAssetsGroup *group, BOOL *stop1) {
-		NSMutableArray *theAssets = [NSMutableArray array];
-		[group enumerateAssetsUsingBlock:^(ALAsset *asset, NSUInteger index, BOOL *stop2) {
-			if (theAssets.count > 100)
-				{
-				*stop2 = YES;
-				}
-			if (asset)
-				{
-				[theAssets addObject:asset];
-				}
-			}];
-
-		self.assets = theAssets;
-		if (self.assets.count > 0)
-			{
-			dispatch_async(dispatch_get_main_queue(), ^{
-				self.cellCount = self.assets.count;
-				[self.collectionView reloadData];
-				});
-			}
-
-		*stop1 = YES;
-		} failureBlock:NULL];
-#endif
 	}
 
 #pragma mark -
@@ -116,18 +86,11 @@
 
 	if (indexPath.row < self.assets.count)
 		{
-#if 1
 		NSURL *theURL = [self.assets objectAtIndex:indexPath.row];
 		UIImage *theImage = [UIImage imageWithContentsOfFile:theURL.path];
 		theCell.imageView.image = theImage;
 		theCell.reflectionImageView.image = theImage;
 		theCell.backgroundColor = [UIColor clearColor];
-#else
-		ALAsset *theAsset = [self.assets objectAtIndex:indexPath.row];
-		theCell.imageView.image = [UIImage imageWithCGImage:theAsset.thumbnail];
-		theCell.reflectionImageView.image = [[UIImage imageWithCGImage:theAsset.thumbnail] reflectedImageWithHeight:theCell.reflectionImageView.bounds.size.height];
-		theCell.backgroundColor = [UIColor clearColor];
-#endif
 		}
 
 	return(theCell);
