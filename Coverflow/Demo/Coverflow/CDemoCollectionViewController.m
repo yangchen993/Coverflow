@@ -21,6 +21,7 @@
 @property (readwrite, nonatomic, assign) NSInteger cellCount;
 @property (readwrite, nonatomic, strong) NSArray *assets;
 @property (readwrite, nonatomic, strong) CCoverflowTitleView *titleView;
+@property (readwrite, nonatomic, strong) NSCache *imageCache;
 @end
 
 @implementation CDemoCollectionViewController
@@ -30,6 +31,7 @@
 	[super viewDidLoad];
 
 	self.cellCount = 10;
+	self.imageCache = [[NSCache alloc] init];
 
 	[self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([CCoverflowTitleView class]) bundle:NULL] forSupplementaryViewOfKind:@"title" withReuseIdentifier:@"title"];
 
@@ -87,7 +89,14 @@
 	if (indexPath.row < self.assets.count)
 		{
 		NSURL *theURL = [self.assets objectAtIndex:indexPath.row];
-		UIImage *theImage = [UIImage imageWithContentsOfFile:theURL.path];
+		UIImage *theImage = [self.imageCache objectForKey:theURL];
+		if (theImage == NULL)
+			{
+			theImage = [UIImage imageWithContentsOfFile:theURL.path];
+
+			[self.imageCache setObject:theImage forKey:theURL];
+			}
+
 		theCell.imageView.image = theImage;
 		theCell.reflectionImageView.image = theImage;
 		theCell.backgroundColor = [UIColor clearColor];
