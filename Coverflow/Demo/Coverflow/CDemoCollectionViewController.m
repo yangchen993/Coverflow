@@ -13,12 +13,13 @@
 
 #import "CDemoCollectionViewCell.h"
 #import "UIImage+Reflections.h"
-#import "CCCoverflowTitleView.h"
+#import "CCoverflowTitleView.h"
 
 @interface CDemoCollectionViewController ()
 @property (readwrite, nonatomic, strong) ALAssetsLibrary *assetsLibrary;
 @property (readwrite, nonatomic, assign) NSInteger cellCount;
 @property (readwrite, nonatomic, strong) NSArray *assets;
+@property (readwrite, nonatomic, strong) CCoverflowTitleView *titleView;
 @end
 
 @implementation CDemoCollectionViewController
@@ -27,9 +28,10 @@
 	{
 	[super viewDidLoad];
 
-	[self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([CCCoverflowTitleView class]) bundle:NULL] forSupplementaryViewOfKind:@"title" withReuseIdentifier:@"title"];
-
 	self.cellCount = 10;
+
+	[self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([CCoverflowTitleView class]) bundle:NULL] forSupplementaryViewOfKind:@"title" withReuseIdentifier:@"title"];
+
 
 #if 1
 	NSMutableArray *theAssets = [NSMutableArray array];
@@ -74,6 +76,25 @@
 #endif
 	}
 
+#pragma mark -
+
+- (void)updateTitle
+	{
+	NSIndexPath *theIndexPath = [self.collectionView indexPathForItemAtPoint:(CGPoint){ CGRectGetMidX(self.collectionView.frame) + self.collectionView.contentOffset.x, CGRectGetMidY(self.collectionView.frame) }];
+//	if (theIndexPath == NULL)
+//		{
+//		self.titleView.titleLabel.text = NULL;
+//		}
+//	else
+//		{
+//		NSURL *theURL = [self.assets objectAtIndex:theIndexPath.row];
+//
+//		self.titleView.titleLabel.text = [NSString stringWithFormat:@"%@", theURL.lastPathComponent];
+//		}
+	}
+
+#pragma mark -
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section;
 	{
 	return(self.cellCount);
@@ -111,8 +132,15 @@
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
 	{
-	UICollectionReusableView *theView = [self.collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"title" forIndexPath:indexPath];
+	CCoverflowTitleView *theView = [self.collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:@"title" forIndexPath:indexPath];
+	self.titleView = theView;
+	[self updateTitle];
 	return(theView);
+	}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+	{
+	[self updateTitle];
 	}
 
 #pragma mark -
@@ -122,6 +150,8 @@
 	NSIndexPath *theIndexPath = [self.collectionView indexPathForCell:(UICollectionViewCell *)inGestureRecognizer.view];
 
 	NSLog(@"%@", [self.collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:theIndexPath]);
+	NSURL *theURL = [self.assets objectAtIndex:theIndexPath.row];
+	NSLog(@"%@", theURL);
 	}
 
 @end

@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface CCCoverflowTitleView : UICollectionReusableView
+@interface CCoverflowTitleView : UICollectionReusableView
 @property (readwrite, nonatomic, strong) IBOutlet UILabel *titleLabel;
 @end

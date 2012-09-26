@@ -9,7 +9,7 @@
 #import "CCoverflowCollectionViewLayout.h"
 
 #import "CInterpolator.h"
-
+#import "CCoverflowTitleView.h"
 #import "CBetterCollectionViewLayoutAttributes.h"
 
 // If we decide to make this vertical we could use these macros to help make it painless...
@@ -38,7 +38,7 @@
 	// TODO I don't like putting this in awakeFromNib - but init is never called. Silly.
     self.cellSize = (CGSize){ 200.0f, 300.0f };
     self.cellSpacing = (CGSize){ 40.0f, 0.0f };
-	self.snapToCells = NO;
+	self.snapToCells = YES;
 
     self.positionoffsetInterpolator = [[CInterpolator interpolatorWithDictionary:@{
 		@(-1.0f):               @(-self.cellSpacing.width * 2.0f),
@@ -94,6 +94,7 @@
 	{
     NSMutableArray *theLayoutAttributes = [NSMutableArray array];
 
+	// Cells...
 	// TODO -- 3 is a bit of a fudge to make sure we get all cells... Ideally we should compute the right number of extra cells to fetch...
     NSInteger theStart = MIN(MAX((NSInteger)floorf(CGRectGetMinX(rect) / self.cellSpacing.width) - 3, 0), self.cellCount);
     NSInteger theEnd = MIN(MAX((NSInteger)ceilf(CGRectGetMaxX(rect) / self.cellSpacing.width) + 3, 0), self.cellCount);
@@ -108,6 +109,10 @@
             [theLayoutAttributes addObject:theAttributes];
             }
         }
+
+	// Decorations...
+	[theLayoutAttributes addObject:[self layoutAttributesForSupplementaryViewOfKind:@"title" atIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]]];
+
     return(theLayoutAttributes);
 	}
 
@@ -117,7 +122,7 @@
     const CGFloat theRow = indexPath.row;
 	const CGRect theViewBounds = self.collectionView.bounds;
 
-    CBetterCollectionViewLayoutAttributes *theAttributes = [[[self class] layoutAttributesClass] layoutAttributesForCellWithIndexPath:indexPath];
+    CBetterCollectionViewLayoutAttributes *theAttributes = [CBetterCollectionViewLayoutAttributes layoutAttributesForCellWithIndexPath:indexPath];
 	theAttributes.size = self.cellSize;
 
 	// #########################################################################
@@ -155,6 +160,15 @@
 	// #########################################################################
 
     return(theAttributes);
+	}
+
+- (UICollectionViewLayoutAttributes *)layoutAttributesForSupplementaryViewOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
+	{
+	UICollectionViewLayoutAttributes *theAttributes = [UICollectionViewLayoutAttributes layoutAttributesForSupplementaryViewOfKind:kind withIndexPath:indexPath];
+	theAttributes.center = (CGPoint){ .x = CGRectGetMidX(self.collectionView.bounds), .y = CGRectGetMaxY(self.collectionView.bounds) - 25};
+	theAttributes.size = (CGSize){ 200, 50 };
+	theAttributes.zIndex = 1;
+	return(theAttributes);
 	}
 
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity

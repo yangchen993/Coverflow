@@ -6,8 +6,12 @@
 //  Copyright (c) 2012 toxicsoftware. All rights reserved.
 //
 
-#import "CCCoverflowTitleView.h"
+#import "CCoverflowTitleView.h"
 
-@implementation CCCoverflowTitleView
+@implementation CCoverflowTitleView
+
+- (void)applyLayoutAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes;
+	{
+	}
 
 @end
