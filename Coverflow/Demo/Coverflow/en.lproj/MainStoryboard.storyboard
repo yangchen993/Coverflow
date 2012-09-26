@@ -20,12 +20,12 @@
                                     <rect key="frame" x="0.0" y="0.0" width="200" height="300"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="bnL-P1-tcf">
+                                        <imageView opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" id="bnL-P1-tcf">
                                             <rect key="frame" x="0.0" y="50" width="200" height="200"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </imageView>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="TSD-A2-1h1">
+                                        <imageView opaque="NO" userInteractionEnabled="NO" alpha="0.69999999999999996" contentMode="scaleToFill" id="TSD-A2-1h1">
                                             <rect key="frame" x="0.0" y="247" width="200" height="53"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                         </imageView>
