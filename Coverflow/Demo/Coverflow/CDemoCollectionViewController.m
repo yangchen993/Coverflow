@@ -81,7 +81,7 @@
 
 	if (theCell.gestureRecognizers.count == 0)
 		{
-		[theCell addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)]];
+		[theCell addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCell:)]];
 		}
 
 	theCell.backgroundColor = [UIColor colorWithHue:(float)indexPath.row / (float)self.cellCount saturation:0.333 brightness:1.0 alpha:1.0];
@@ -120,7 +120,7 @@
 
 #pragma mark -
 
-- (void)tap:(UITapGestureRecognizer *)inGestureRecognizer
+- (void)tapCell:(UITapGestureRecognizer *)inGestureRecognizer
 	{
 	NSIndexPath *theIndexPath = [self.collectionView indexPathForCell:(UICollectionViewCell *)inGestureRecognizer.view];
 
