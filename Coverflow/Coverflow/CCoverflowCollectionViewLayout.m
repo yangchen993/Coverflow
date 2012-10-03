@@ -39,11 +39,11 @@
 	{
 	// TODO I don't like putting this in awakeFromNib - but init is never called. Silly.
     self.cellSize = (CGSize){ 200.0f, 300.0f };
-    self.cellSpacing = (CGSize){ 40.0f, 0.0f };
+    self.cellSpacing = 40.0f;
 	self.snapToCells = YES;
 
     self.positionoffsetInterpolator = [[CInterpolator interpolatorWithDictionary:@{
-		@(-1.0f):               @(-self.cellSpacing.width * 2.0f),
+		@(-1.0f):               @(-self.cellSpacing * 2.0f),
 		@(-0.2f - FLT_EPSILON): @(  0.0f),
 		}] interpolatorWithReflection:YES];
 
@@ -73,7 +73,7 @@
     {
     [super prepareLayout];
 
-	self.centerOffset = (self.collectionView.bounds.size.width - self.cellSpacing.width) * 0.5f;
+	self.centerOffset = (self.collectionView.bounds.size.width - self.cellSpacing) * 0.5f;
 
     self.cellCount = [self.collectionView numberOfItemsInSection:0];
 	}
@@ -86,7 +86,7 @@
 - (CGSize)collectionViewContentSize
 	{
     const CGSize theSize = {
-        .width = self.cellSpacing.width * self.cellCount + self.centerOffset * 2.0f,
+        .width = self.cellSpacing * self.cellCount + self.centerOffset * 2.0f,
         .height = self.collectionView.bounds.size.height,
         };
     return(theSize);
@@ -98,8 +98,8 @@
 
 	// Cells...
 	// TODO -- 3 is a bit of a fudge to make sure we get all cells... Ideally we should compute the right number of extra cells to fetch...
-    NSInteger theStart = MIN(MAX((NSInteger)floorf(CGRectGetMinX(rect) / self.cellSpacing.width) - 3, 0), self.cellCount);
-    NSInteger theEnd = MIN(MAX((NSInteger)ceilf(CGRectGetMaxX(rect) / self.cellSpacing.width) + 3, 0), self.cellCount);
+    NSInteger theStart = MIN(MAX((NSInteger)floorf(CGRectGetMinX(rect) / self.cellSpacing) - 3, 0), self.cellCount);
+    NSInteger theEnd = MIN(MAX((NSInteger)ceilf(CGRectGetMaxX(rect) / self.cellSpacing) + 3, 0), self.cellCount);
 
     for (NSInteger N = theStart; N != theEnd; ++N)
         {
@@ -130,7 +130,7 @@
 	// #########################################################################
 
 	// Delta is distance from center of the view in cellSpacing units...
-	const CGFloat theDelta = ((theRow + 0.5f) * self.cellSpacing.width + self.centerOffset - theViewBounds.size.width * 0.5f - self.collectionView.contentOffset.x) / self.cellSpacing.width;
+	const CGFloat theDelta = ((theRow + 0.5f) * self.cellSpacing + self.centerOffset - theViewBounds.size.width * 0.5f - self.collectionView.contentOffset.x) / self.cellSpacing;
 
 	// TODO - we should write a getter for this that calculates the value. Setting it constantly is wasteful.
 	if (roundf(theDelta) == 0)
@@ -140,7 +140,7 @@
 
 	// #########################################################################
 
-    const CGFloat thePosition = (theRow + 0.5f) * (self.cellSpacing.width) + [self.positionoffsetInterpolator interpolatedValueForKey:theDelta];
+    const CGFloat thePosition = (theRow + 0.5f) * (self.cellSpacing) + [self.positionoffsetInterpolator interpolatedValueForKey:theDelta];
 	theAttributes.center = (CGPoint){ thePosition + self.centerOffset, CGRectGetMidY(theViewBounds) };
 
 	// #########################################################################
@@ -184,8 +184,8 @@
     CGPoint theTargetContentOffset = proposedContentOffset;
     if (self.snapToCells == YES)
         {
-        theTargetContentOffset.x = roundf(theTargetContentOffset.x / self.cellSpacing.width) * self.cellSpacing.width;
-        theTargetContentOffset.x = MIN(theTargetContentOffset.x, (self.cellCount - 1) * self.cellSpacing.width);
+        theTargetContentOffset.x = roundf(theTargetContentOffset.x / self.cellSpacing) * self.cellSpacing;
+        theTargetContentOffset.x = MIN(theTargetContentOffset.x, (self.cellCount - 1) * self.cellSpacing);
         }
     return(theTargetContentOffset);
     }
