@@ -9,7 +9,6 @@
 #import "CCoverflowCollectionViewLayout.h"
 
 #import "CInterpolator.h"
-#import "CCoverflowTitleView.h"
 #import "CBetterCollectionViewLayoutAttributes.h"
 
 // If we decide to make this vertical we could use these macros to help make it painless...
