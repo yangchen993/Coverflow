@@ -34,9 +34,22 @@
     return([CBetterCollectionViewLayoutAttributes class]);
     }
 
+- (id)init
+    {
+    if ((self = [super init]) != NULL)
+        {
+		[self setup];
+        }
+    return self;
+    }
+
 - (void)awakeFromNib
 	{
-	// TODO I don't like putting this in awakeFromNib - but init is never called. Silly.
+	[self setup];
+	}
+
+- (void)setup
+	{
     self.cellSize = (CGSize){ 200.0f, 300.0f };
     self.cellSpacing = 40.0f;
 	self.snapToCells = YES;
