@@ -37,6 +37,9 @@
 
 @interface CBetterCollectionViewCell ()
 @property (readwrite, nonatomic, strong) CALayer *shieldLayer;
+#if DEBUG == 1
+@property (readwrite, nonatomic, strong) UILabel *debugInfoLabel;
+#endif
 @end
 
 #pragma mark -
@@ -56,6 +59,28 @@
         }
 
     self.shieldLayer.opacity = theLayoutAttributes.shieldAlpha;
+
+	#if DEBUG == 1
+	if (theLayoutAttributes.debugInfo.length > 0)
+		{
+		if (self.debugInfoLabel == NULL)
+			{
+			self.debugInfoLabel = [[UILabel alloc] initWithFrame:CGRectInset(self.bounds, 10, 10)];
+			self.debugInfoLabel.numberOfLines = 0;
+			self.debugInfoLabel.lineBreakMode = NSLineBreakByCharWrapping;
+			self.debugInfoLabel.backgroundColor = [UIColor clearColor];
+			self.debugInfoLabel.textColor = [UIColor redColor];
+			[self addSubview:self.debugInfoLabel];
+			}
+		self.debugInfoLabel.text = theLayoutAttributes.debugInfo;
+
+		}
+	else
+		{
+		[self.debugInfoLabel removeFromSuperview];
+		self.debugInfoLabel = NULL;
+		}
+	#endif /* DEBUG == 1 */
     }
 
 #pragma mark -

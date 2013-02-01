@@ -43,6 +43,9 @@
     CBetterCollectionViewLayoutAttributes *theCopy = [super copyWithZone:zone];
 	theCopy.shieldAlpha = self.shieldAlpha;
 	theCopy.userInfo = [self.userInfo copyWithZone:zone];
+	#if DEBUG == 1
+	theCopy.debugInfo = self.debugInfo;
+	#endif /* DEBUG == 1 */
     return(theCopy);
     }
 
