@@ -200,6 +200,8 @@
 
 	theAttributes.shieldAlpha = [self.darknessInterpolator interpolatedValueForKey:theDelta];
 
+    theAttributes.zIndex = self.cellCount - abs(self.currentIndexPath.row-indexPath.row);
+
 	// #########################################################################
 
     return(theAttributes);
