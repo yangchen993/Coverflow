@@ -33,6 +33,7 @@
 
 #import "CInterpolator.h"
 #import "CBetterCollectionViewLayoutAttributes.h"
+#import "tgmath.h"
 
 // If we decide to make this vertical we could use these macros to help make it painless...
 //#define XORY(axis, point) ((axis) ? (point.y) : (point.x))
@@ -40,6 +41,7 @@
 
 @interface CCoverflowCollectionViewLayout ()
 @property (readwrite, nonatomic, strong) NSIndexPath *currentIndexPath;
+@property (readwrite, nonatomic, strong) NSIndexPath *savedCenterIndexPath;
 
 @property (readwrite, nonatomic, assign) CGFloat centerOffset;
 @property (readwrite, nonatomic, assign) NSInteger cellCount;
@@ -113,9 +115,14 @@
     self.cellCount = [self.collectionView numberOfItemsInSection:0];
 	}
 
-- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)oldBounds
+- (BOOL)shouldInvalidateLayoutForBoundsChange:(CGRect)newBounds
     {
-    return(YES);
+        if ( newBounds.size.width != self.collectionView.bounds.size.width )
+        {
+            self.savedCenterIndexPath = self.currentIndexPath;
+        }
+
+        return(YES);
     }
 
 - (CGSize)collectionViewContentSize
@@ -133,8 +140,8 @@
 
 	// Cells...
 	// TODO -- 3 is a bit of a fudge to make sure we get all cells... Ideally we should compute the right number of extra cells to fetch...
-    NSInteger theStart = MIN(MAX((NSInteger)floorf(CGRectGetMinX(rect) / self.cellSpacing) - 3, 0), self.cellCount);
-    NSInteger theEnd = MIN(MAX((NSInteger)ceilf(CGRectGetMaxX(rect) / self.cellSpacing) + 3, 0), self.cellCount);
+    NSInteger theStart = MIN(MAX((NSInteger)floor(CGRectGetMinX(rect) / self.cellSpacing) - 3, 0), self.cellCount);
+    NSInteger theEnd = MIN(MAX((NSInteger)ceil(CGRectGetMaxX(rect) / self.cellSpacing) + 3, 0), self.cellCount);
 
     for (NSInteger N = theStart; N != theEnd; ++N)
         {
@@ -168,7 +175,7 @@
 	const CGFloat theDelta = ((theRow + 0.5f) * self.cellSpacing + self.centerOffset - theViewBounds.size.width * 0.5f - self.collectionView.contentOffset.x) / self.cellSpacing;
 
 	// TODO - we should write a getter for this that calculates the value. Setting it constantly is wasteful.
-	if (roundf(theDelta) == 0)
+	if (round(theDelta) == 0)
 		{
 		self.currentIndexPath = indexPath;
 		}
@@ -200,7 +207,7 @@
 
 	theAttributes.shieldAlpha = [self.darknessInterpolator interpolatedValueForKey:theDelta];
 
-    theAttributes.zIndex = self.cellCount - abs(self.currentIndexPath.row-indexPath.row);
+    theAttributes.zIndex = self.cellCount - labs(self.currentIndexPath.row-indexPath.row);
 
 	// #########################################################################
 
@@ -221,11 +228,34 @@
     CGPoint theTargetContentOffset = proposedContentOffset;
     if (self.snapToCells == YES)
         {
-        theTargetContentOffset.x = roundf(theTargetContentOffset.x / self.cellSpacing) * self.cellSpacing;
+        theTargetContentOffset.x = round(theTargetContentOffset.x / self.cellSpacing) * self.cellSpacing;
         theTargetContentOffset.x = MIN(theTargetContentOffset.x, (self.cellCount - 1) * self.cellSpacing);
         }
     return(theTargetContentOffset);
     }
+
+- (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset
+{
+    CGPoint theTargetContentOffset = proposedContentOffset;
+    
+    if (self.snapToCells == YES)
+    {
+        if ( self.savedCenterIndexPath )
+        {
+            CGFloat theRow = self.savedCenterIndexPath.row;
+            theTargetContentOffset.x =
+            MAX( 0, ( theRow + 0.5f ) * self.cellSpacing + self.centerOffset - CGRectGetWidth(self.collectionView.bounds ) / 2.0f );
+            self.currentIndexPath = self.savedCenterIndexPath;
+            self.savedCenterIndexPath = Nil;
+        }
+        else
+        {
+            theTargetContentOffset.x = round(theTargetContentOffset.x / self.cellSpacing) * self.cellSpacing;
+            theTargetContentOffset.x = MIN(theTargetContentOffset.x, (self.cellCount - 1) * self.cellSpacing);
+        }
+    }
+    return(theTargetContentOffset);
+}
 
 
 @end

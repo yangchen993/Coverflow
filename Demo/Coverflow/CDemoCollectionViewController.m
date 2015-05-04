@@ -107,7 +107,7 @@
 		[theCell addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapCell:)]];
 		}
 
-	theCell.backgroundColor = [UIColor colorWithHue:(float)indexPath.row / (float)self.cellCount saturation:0.333 brightness:1.0 alpha:1.0];
+	theCell.backgroundColor = [UIColor colorWithHue:(CGFloat)indexPath.row / (CGFloat)self.cellCount saturation:0.333f brightness:1.0 alpha:1.0];
 
 	if (indexPath.row < self.assets.count)
 		{

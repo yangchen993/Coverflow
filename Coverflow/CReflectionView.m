@@ -93,7 +93,7 @@
 		_gradientLayer.frame = self.layer.bounds;
 		_gradientLayer.colors = @[
 			(__bridge id)[UIColor colorWithWhite:1.0 alpha:0.0].CGColor,
-			(__bridge id)[UIColor colorWithWhite:1.0 alpha:0.8].CGColor,
+			(__bridge id)[UIColor colorWithWhite:1.0 alpha:0.8f].CGColor,
 			];
 		}
 	return(_gradientLayer);
