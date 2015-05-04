@@ -40,7 +40,7 @@ Pod::Spec.new do |s|
   s.authors            = { "schwa" => "schwa@toxicsoftware.com" }
 
   s.platform     = :ios, "5.0"
-  s.source       = { :git => "https://github.com/schwa/Coverflow.git" :tag => s.version.to_s}
+  s.source       = { :git => "https://github.com/schwa/Coverflow.git", :tag => s.version.to_s}
   s.source_files  = "Coverflow/*.{h,m,mm,cpp}"
 
   s.frameworks = "CoreGraphics", "QuartzCore"
