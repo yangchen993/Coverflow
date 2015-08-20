@@ -190,7 +190,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = C;
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = toxicsoftware;
 			};
 			buildConfigurationList = 456BDDC91610896400398F00 /* Build configuration list for PBXProject "Coverflow" */;

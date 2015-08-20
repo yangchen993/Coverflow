@@ -54,11 +54,11 @@
     if (self.shieldLayer == NULL)
         {
         self.shieldLayer = [self makeShieldLayer];
-        self.shieldLayer.zPosition = INFINITY;
+        self.shieldLayer.zPosition = FLT_MAX;
         [self.layer addSublayer:self.shieldLayer];
         }
 
-    self.shieldLayer.opacity = theLayoutAttributes.shieldAlpha;
+    self.shieldLayer.opacity = (float)theLayoutAttributes.shieldAlpha;
 
 	#if DEBUG == 1
 	if (theLayoutAttributes.debugInfo.length > 0)
